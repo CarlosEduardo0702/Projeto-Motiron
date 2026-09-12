@@ -12,10 +12,15 @@ O sistema permite acompanhar informações importantes de cada unidade, controla
 Principais funcionalidades:
 
 🏢 Gerenciamento de unidades
+
 📄 Controle de documentos
+
 ✅ Gerenciamento de tarefas
+
 📊 Dashboard com indicadores
+
 🔎 Pesquisa e filtros
+
 📋 Visualização detalhada das unidades
 
 Projeto acadêmico desenvolvido para fins de aprendizado e demonstração de conhecimentos em desenvolvimento web.
