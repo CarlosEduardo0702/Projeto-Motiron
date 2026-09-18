@@ -1,2 +1,791 @@
 //       exibe os documentos cadastrados e permite acompanhar seu status de 
           validade. 
+
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NexaLog · Documentos</title>
+
+  <!-- Fontes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&display=swap"
+  />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+  />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+  />
+
+  <!-- Reset mínimo -->
+  <style>
+    @layer base {
+      html, body { margin: 0; padding: 0; }
+      body { overscroll-behavior: none; }
+      main > :first-child { margin-top: 0 !important; }
+      main > :last-child { margin-bottom: 0 !important; }
+    }
+    ::-webkit-scrollbar { display: none; }
+  </style>
+
+  <!-- Tailwind + tokens de design (cores, tipografia, espaçamento) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-secondary-fixed-variant": "#304f00",
+            "on-secondary-container": "#457000",
+            "surface-container-low": "#eff4ff",
+            "secondary-container": "#acf847",
+            "on-tertiary-fixed-variant": "#004b73",
+            "surface-variant": "#d3e4fe",
+            "surface-bright": "#f8f9ff",
+            "inverse-surface": "#213145",
+            "error-container": "#ffdad6",
+            "surface-tint": "#3c6658",
+            "secondary": "#416900",
+            "on-tertiary-container": "#42a4e8",
+            "on-surface-variant": "#414845",
+            "primary": "#00241a",
+            "surface-container-high": "#dce9ff",
+            "inverse-primary": "#a3d0be",
+            "secondary-fixed-dim": "#91db2a",
+            "surface-dim": "#cbdbf5",
+            "primary-fixed-dim": "#a3d0be",
+            "surface": "#f8f9ff",
+            "outline-variant": "#c0c8c3",
+            "error": "#ba1a1a",
+            "on-tertiary": "#ffffff",
+            "surface-container-highest": "#d3e4fe",
+            "tertiary-fixed-dim": "#93ccff",
+            "on-primary": "#ffffff",
+            "primary-fixed": "#beedd9",
+            "primary-container": "#0d3b2e",
+            "outline": "#717974",
+            "surface-container-lowest": "#ffffff",
+            "on-secondary-fixed": "#102000",
+            "tertiary-container": "#003757",
+            "on-primary-fixed-variant": "#234e40",
+            "on-surface": "#0b1c30",
+            "secondary-fixed": "#acf847",
+            "background": "#f8f9ff",
+            "on-error-container": "#93000a",
+            "tertiary-fixed": "#cce5ff",
+            "inverse-on-surface": "#eaf1ff",
+            "tertiary": "#002136",
+            "on-primary-fixed": "#002117",
+            "on-primary-container": "#79a694",
+            "on-background": "#0b1c30",
+            "surface-container": "#e5eeff",
+            "on-secondary": "#ffffff",
+            "on-tertiary-fixed": "#001d31",
+            "on-error": "#ffffff",
+          },
+          borderRadius: {
+            DEFAULT: "0.25rem",
+            lg: "0.5rem",
+            xl: "0.75rem",
+            full: "9999px",
+          },
+          spacing: {
+            "space-xl": "2rem",
+            "margin": "2rem",
+            "gutter-mobile": "1rem",
+            "space-sm": "0.5rem",
+            "space-md": "1rem",
+            "gutter": "1.5rem",
+            "space-2xl": "3rem",
+            "space-xs": "0.25rem",
+            "space-lg": "1.5rem",
+            "margin-mobile": "1rem",
+          },
+          fontFamily: {
+            "body-lg": ["Inter"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "body-sm": ["Inter"],
+            "body-md": ["Inter"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "title-md": ["Inter"],
+            "label-sm": ["Inter"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "title-lg": ["Inter"],
+            "label-md": ["Inter"],
+            "headline-lg-mobile": ["Plus Jakarta Sans"],
+            "display": ["Plus Jakarta Sans"],
+          },
+          fontSize: {
+            "body-lg": ["16px", { lineHeight: "24px", letterSpacing: "0em", fontWeight: "400" }],
+            "headline-lg": ["28px", { lineHeight: "36px", letterSpacing: "-0.02em", fontWeight: "700" }],
+            "body-sm": ["12px", { lineHeight: "16px", letterSpacing: "0.01em", fontWeight: "400" }],
+            "body-md": ["14px", { lineHeight: "20px", letterSpacing: "0em", fontWeight: "400" }],
+            "headline-md": ["22px", { lineHeight: "28px", letterSpacing: "-0.015em", fontWeight: "600" }],
+            "title-md": ["14px", { lineHeight: "20px", letterSpacing: "0em", fontWeight: "600" }],
+            "label-sm": ["11px", { lineHeight: "14px", letterSpacing: "0.03em", fontWeight: "600" }],
+            "headline-sm": ["18px", { lineHeight: "24px", letterSpacing: "-0.01em", fontWeight: "600" }],
+            "title-lg": ["16px", { lineHeight: "24px", letterSpacing: "-0.005em", fontWeight: "600" }],
+            "label-md": ["13px", { lineHeight: "18px", letterSpacing: "0.005em", fontWeight: "500" }],
+            "headline-lg-mobile": ["24px", { lineHeight: "32px", letterSpacing: "-0.015em", fontWeight: "700" }],
+            "display": ["36px", { lineHeight: "44px", letterSpacing: "-0.025em", fontWeight: "700" }],
+          },
+        },
+      },
+    };
+  </script>
+</head>
+
+<body class="bg-surface font-body-md text-body-md text-on-surface antialiased min-h-screen">
+
+  <!-- ===================== SIDEBAR ===================== -->
+  <aside class="fixed left-0 top-0 bottom-0 w-64 bg-primary-container z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
+    <div class="flex flex-col">
+      <!-- Logo -->
+      <div class="h-16 px-space-lg flex items-center gap-space-sm bg-primary/20">
+        <img
+          class="h-8 w-auto object-contain"
+          alt="Logo Movere Logística"
+          src="https://lh3.googleusercontent.com/aida/AEtjO1UN1vecR9_lq-98xc7FAt21Bsgx8G5TEMGEyzVd6JvaljHRXqhTFv0Crkhn2PRF1E92r4TsLfgeBPs6oCTAVDKkCrvK8ErDGEGptetF45Ii5VZ_WLG2qWCm6S3jbw7nablpKqSpavMmOSXVFJbL7p0m_o70EkSD0L6JMPjtQbHYCF0mkiDYhkksFia5l03F0sW1Zm-0narI-ctdZWYovxkPZo38HRkUlhABQneb1qg2zYGxDYZ0A9It6A"
+        />
+        <span class="font-headline-sm text-headline-sm text-on-primary tracking-tight font-bold">Movere</span>
+      </div>
+
+      <div class="px-space-md py-space-sm">
+        <span class="font-label-sm text-label-sm uppercase tracking-wider text-on-primary-container/80 px-space-sm">
+          Operação &amp; Controle
+        </span>
+      </div>
+
+      <!-- Navegação principal -->
+      <nav
+        class="flex flex-col gap-1 px-space-sm"
+        data-active-classes="bg-surface-container-lowest/10 text-on-primary font-title-md border-l-4 border-secondary-fixed shadow-[0_1px_8px_rgba(0,0,0,0.04)]"
+      >
+        <a href="#" data-path="visao-geral" class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-primary-container hover:bg-surface-container-lowest/5 hover:text-on-primary transition-all">
+          <span class="material-symbols-outlined text-[20px]">dashboard</span>
+          <span class="font-title-md text-title-md">Visão Geral</span>
+        </a>
+        <a href="#" data-path="unidades" class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-primary-container hover:bg-surface-container-lowest/5 hover:text-on-primary transition-all">
+          <span class="material-symbols-outlined text-[20px]">apartment</span>
+          <span class="font-title-md text-title-md">Unidades</span>
+        </a>
+        <a href="#" data-path="documentos" aria-current="page" class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg transition-all bg-surface-container-lowest/10 text-on-primary font-title-md border-l-4 border-secondary-fixed shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
+          <span class="material-symbols-outlined text-[20px]">description</span>
+          <span class="font-title-md text-title-md">Documentos</span>
+        </a>
+        <a href="#" data-path="tarefas" class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-primary-container hover:bg-surface-container-lowest/5 hover:text-on-primary transition-all">
+          <span class="material-symbols-outlined text-[20px]">check_box</span>
+          <span class="font-title-md text-title-md">Tarefas</span>
+        </a>
+        <a href="#" data-path="relatorios" class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-primary-container hover:bg-surface-container-lowest/5 hover:text-on-primary transition-all">
+          <span class="material-symbols-outlined text-[20px]">bar_chart</span>
+          <span class="font-title-md text-title-md">Relatórios</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- Navegação secundária -->
+    <div class="p-space-sm bg-primary/30 flex flex-col gap-1">
+      <nav class="flex flex-col gap-1" data-active-classes="bg-surface-container-lowest/10 text-on-primary font-title-md border-l-4 border-secondary-fixed">
+        <a href="#" data-path="configuracoes" class="flex items-center gap-space-sm px-space-md py-2 rounded-lg text-on-primary-container hover:bg-surface-container-lowest/5 hover:text-on-primary transition-all">
+          <span class="material-symbols-outlined text-[20px]">settings</span>
+          <span class="font-title-md text-title-md">Configurações</span>
+        </a>
+        <a href="#" data-path="sair" class="flex items-center gap-space-sm px-space-md py-2 rounded-lg text-on-primary-container hover:bg-surface-container-lowest/5 hover:text-on-primary transition-all">
+          <span class="material-symbols-outlined text-[20px]">logout</span>
+          <span class="font-title-md text-title-md">Sair</span>
+        </a>
+      </nav>
+    </div>
+  </aside>
+
+  <div class="pl-64">
+
+    <!-- ===================== HEADER ===================== -->
+    <header class="fixed top-0 left-64 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-space-xl">
+      <div class="flex items-center gap-space-md w-full max-w-lg">
+        <div class="relative w-full flex items-center">
+          <span class="material-symbols-outlined absolute left-3 text-[20px] text-outline pointer-events-none">search</span>
+          <input
+            type="text"
+            placeholder="Pesquisar unidades, documentos, tarefas..."
+            class="w-full h-10 pl-10 pr-space-md bg-surface-container-low rounded-lg font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:bg-surface-container-lowest transition-all"
+          />
+        </div>
+      </div>
+
+      <div class="flex items-center gap-space-lg">
+        <button type="button" class="relative p-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all flex items-center justify-center">
+          <span class="material-symbols-outlined text-[22px]">notifications</span>
+          <span class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-secondary-fixed rounded-full ring-2 ring-surface-container-lowest"></span>
+        </button>
+
+        <div class="h-6 w-px bg-surface-container"></div>
+
+        <div class="flex items-center gap-space-sm">
+          <div class="text-right">
+            <p class="font-title-md text-title-md text-on-surface leading-tight">Fernanda Silva</p>
+            <p class="font-label-sm text-label-sm text-on-surface-variant leading-tight">Gerente Executiva</p>
+          </div>
+          <img
+            class="w-8 h-8 rounded-full object-cover shadow-[0_1px_8px_rgba(0,0,0,0.04)]"
+            alt="Profile"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUbn12l0EFfGnh59Pq6grpnC6L7zyu0RK3udQhTQ7guK9JnrcZN0z4wF8mBrG4r9jEor0LCDRzGdiQjJiPbRio_p8a2AWxJ_yr3ZsgTJCqzlKLWqTWL2Fz1JxI04fHZSUyGlRQ6RRzBBjiqYoxxHMs-jAlz5jqLUYIeq1ywTC9LzJ6ksZHp0hORLqg7svkCW4NL-URNCYtqCLI3DHfoPjGLSRik7hNwqTGuBVMOkc_nAzE0rU7FIFK"
+          />
+        </div>
+      </div>
+    </header>
+
+    <!-- ===================== CONTEÚDO PRINCIPAL ===================== -->
+    <main class="w-full pt-16 bg-surface min-h-screen">
+      <div class="w-full px-space-xl py-space-lg max-w-[1680px] mx-auto">
+        <div class="flex flex-col w-full gap-space-lg">
+
+          <!-- Cabeçalho da página + KPIs -->
+          <div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md">
+            <div>
+              <div class="flex items-center gap-space-xs mb-1">
+                <span class="w-2 h-2 rounded-full bg-secondary-fixed"></span>
+                <span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Gestão Regulatória</span>
+              </div>
+              <h1 class="font-headline-lg text-headline-lg text-on-surface">Documentos</h1>
+              <p class="font-body-md text-body-md text-on-surface-variant mt-0.5">
+                Acompanhe os documentos das unidades em tempo real com conformidade garantida.
+              </p>
+            </div>
+
+            <div class="flex items-center gap-space-sm flex-wrap">
+              <div class="flex items-center gap-space-sm px-space-md py-2 bg-surface-container-lowest rounded-xl shadow-sm">
+                <span class="w-2.5 h-2.5 rounded-full bg-secondary"></span>
+                <div class="flex flex-col">
+                  <span class="font-label-sm text-label-sm text-outline">Conformes</span>
+                  <span class="font-title-md text-title-md text-on-surface font-bold">218</span>
+                </div>
+              </div>
+              <div class="flex items-center gap-space-sm px-space-md py-2 bg-surface-container-lowest rounded-xl shadow-sm">
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+                <div class="flex flex-col">
+                  <span class="font-label-sm text-label-sm text-outline">A Vencer</span>
+                  <span class="font-title-md text-title-md text-on-surface font-bold">19</span>
+                </div>
+              </div>
+              <div class="flex items-center gap-space-sm px-space-md py-2 bg-surface-container-lowest rounded-xl shadow-sm">
+                <span class="w-2.5 h-2.5 rounded-full bg-error"></span>
+                <div class="flex flex-col">
+                  <span class="font-label-sm text-label-sm text-outline">Vencidos</span>
+                  <span class="font-title-md text-title-md text-error font-bold">11</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Filtros + ação principal -->
+          <div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col gap-space-md">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-space-sm items-center">
+
+              <div class="md:col-span-4 relative flex items-center">
+                <span class="material-symbols-outlined absolute left-3 text-[18px] text-outline pointer-events-none">search</span>
+                <input
+                  id="searchInput"
+                  type="text"
+                  placeholder="Buscar por nome do documento, código ou órgão..."
+                  class="w-full h-10 pl-9 pr-space-md bg-surface-container-low rounded-lg font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:bg-surface-container transition-all"
+                />
+              </div>
+
+              <div class="md:col-span-2">
+                <div class="relative">
+                  <select id="filterUnidade" class="w-full h-10 px-space-sm pl-8 appearance-none bg-surface-container-low rounded-lg font-body-md text-body-md text-on-surface focus:outline-none focus:bg-surface-container cursor-pointer transition-all">
+                    <option value="">Todas as Unidades</option>
+                    <option value="Recife">Recife</option>
+                    <option value="Olinda">Olinda</option>
+                    <option value="Jaboatão">Jaboatão</option>
+                    <option value="Caruaru">Caruaru</option>
+                    <option value="Petrolina">Petrolina</option>
+                  </select>
+                  <span class="material-symbols-outlined absolute left-2.5 top-2.5 text-[18px] text-outline pointer-events-none">apartment</span>
+                  <span class="material-symbols-outlined absolute right-2.5 top-2.5 text-[18px] text-outline pointer-events-none">expand_more</span>
+                </div>
+              </div>
+
+              <div class="md:col-span-2">
+                <div class="relative">
+                  <select id="filterStatus" class="w-full h-10 px-space-sm pl-8 appearance-none bg-surface-container-low rounded-lg font-body-md text-body-md text-on-surface focus:outline-none focus:bg-surface-container cursor-pointer transition-all">
+                    <option value="">Todos os Status</option>
+                    <option value="Válido">Válido</option>
+                    <option value="Próximo do vencimento">Próximo do vencimento</option>
+                    <option value="Vencido">Vencido</option>
+                  </select>
+                  <span class="material-symbols-outlined absolute left-2.5 top-2.5 text-[18px] text-outline pointer-events-none">flag</span>
+                  <span class="material-symbols-outlined absolute right-2.5 top-2.5 text-[18px] text-outline pointer-events-none">expand_more</span>
+                </div>
+              </div>
+
+              <div class="md:col-span-2">
+                <div class="relative">
+                  <select id="filterCategoria" class="w-full h-10 px-space-sm pl-8 appearance-none bg-surface-container-low rounded-lg font-body-md text-body-md text-on-surface focus:outline-none focus:bg-surface-container cursor-pointer transition-all">
+                    <option value="">Todas Categorias</option>
+                    <option value="Alvarás">Alvarás</option>
+                    <option value="Licenças Ambientais">Licenças Ambientais</option>
+                    <option value="Seguros">Seguros</option>
+                    <option value="Contratos">Contratos</option>
+                    <option value="Laudos Técnicos">Laudos Técnicos</option>
+                  </select>
+                  <span class="material-symbols-outlined absolute left-2.5 top-2.5 text-[18px] text-outline pointer-events-none">category</span>
+                  <span class="material-symbols-outlined absolute right-2.5 top-2.5 text-[18px] text-outline pointer-events-none">expand_more</span>
+                </div>
+              </div>
+
+              <div class="md:col-span-2 flex justify-end">
+                <button id="newDocumentBtn" type="button" class="w-full h-10 px-space-md bg-secondary-fixed hover:bg-secondary-fixed-dim text-on-secondary-fixed font-title-md text-title-md font-bold rounded-lg flex items-center justify-center gap-space-xs transition-all shadow-sm">
+                  <span class="material-symbols-outlined text-[20px]">add</span>
+                  <span>Novo Documento</span>
+                </button>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Tabela de documentos -->
+          <div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr class="bg-surface-container-low h-10 text-outline font-label-md text-label-md">
+                    <th class="px-space-md font-semibold">Documento</th>
+                    <th class="px-space-md font-semibold">Unidade</th>
+                    <th class="px-space-md font-semibold">Categoria</th>
+                    <th class="px-space-md font-semibold">Data de Cadastro</th>
+                    <th class="px-space-md font-semibold">Validade</th>
+                    <th class="px-space-md font-semibold">Status</th>
+                    <th class="px-space-md font-semibold text-right">Ações</th>
+                  </tr>
+                </thead>
+                <tbody id="documentsBody" class="divide-y-0 text-on-surface font-body-md text-body-md">
+                  <!-- Linhas geradas dinamicamente por renderTable() -->
+                </tbody>
+              </table>
+            </div>
+
+            <div class="p-space-md bg-surface-container-low flex flex-col sm:flex-row items-center justify-between gap-space-md">
+              <div id="paginationInfo" class="font-body-sm text-body-sm text-outline">Mostrando 0 documentos</div>
+              <div id="paginationControls" class="flex items-center gap-1"></div>
+            </div>
+          </div>
+
+          <!-- Cards informativos -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+            <div class="p-space-md bg-surface-container-lowest rounded-xl shadow-sm flex items-start gap-space-md">
+              <div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-primary shrink-0">
+                <span class="material-symbols-outlined text-[22px]">notifications_active</span>
+              </div>
+              <div>
+                <h4 class="font-title-md text-title-md text-on-surface font-semibold">Alertas Automáticos</h4>
+                <p class="font-body-sm text-body-sm text-outline mt-0.5">
+                  Notificações disparadas para as lideranças locais a 60, 30 e 15 dias do vencimento.
+                </p>
+              </div>
+            </div>
+            <div class="p-space-md bg-surface-container-lowest rounded-xl shadow-sm flex items-start gap-space-md">
+              <div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-primary shrink-0">
+                <span class="material-symbols-outlined text-[22px]">cloud_sync</span>
+              </div>
+              <div>
+                <h4 class="font-title-md text-title-md text-on-surface font-semibold">Integração Municipal</h4>
+                <p class="font-body-sm text-body-sm text-outline mt-0.5">
+                  Sincronização diária com certidões negativas de débito e portais das capitais e interior.
+                </p>
+              </div>
+            </div>
+            <div class="p-space-md bg-surface-container-lowest rounded-xl shadow-sm flex items-start gap-space-md">
+              <div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-primary shrink-0">
+                <span class="material-symbols-outlined text-[22px]">folder_zip</span>
+              </div>
+              <div>
+                <h4 class="font-title-md text-title-md text-on-surface font-semibold">Dossiê para Auditoria</h4>
+                <p class="font-body-sm text-body-sm text-outline mt-0.5">
+                  Exporte o pacote de documentação de qualquer filial em um único arquivo ZIP certificado.
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ===================== MODAL: NOVO DOCUMENTO ===================== -->
+  <div id="documentModal" class="hidden fixed inset-0 z-[100] bg-black/40 items-center justify-center p-4">
+    <div class="bg-surface-container-lowest rounded-xl shadow-2xl w-full max-w-xl p-space-lg">
+      <div class="flex items-center justify-between mb-space-md">
+        <div>
+          <h2 class="font-headline-md text-headline-md text-on-surface">Novo Documento</h2>
+          <p class="font-body-sm text-body-sm text-on-surface-variant">Cadastre um documento da NexaLog.</p>
+        </div>
+        <button id="closeModalBtn" type="button" class="p-2 rounded-lg hover:bg-surface-container">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <form id="documentForm" class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+        <label class="md:col-span-2 flex flex-col gap-1">
+          <span class="font-label-md text-label-md">Nome do documento</span>
+          <input id="docNome" required placeholder="Ex.: Licença Ambiental" class="h-10 px-3 bg-surface-container-low rounded-lg" />
+        </label>
+
+        <label class="flex flex-col gap-1">
+          <span class="font-label-md text-label-md">Código</span>
+          <input id="docCodigo" required placeholder="DOC-001" class="h-10 px-3 bg-surface-container-low rounded-lg" />
+        </label>
+
+        <label class="flex flex-col gap-1">
+          <span class="font-label-md text-label-md">Órgão</span>
+          <input id="docOrgao" required placeholder="Órgão emissor" class="h-10 px-3 bg-surface-container-low rounded-lg" />
+        </label>
+
+        <label class="flex flex-col gap-1">
+          <span class="font-label-md text-label-md">Unidade</span>
+          <select id="docUnidade" class="h-10 px-3 bg-surface-container-low rounded-lg">
+            <option>Recife</option>
+            <option>Olinda</option>
+            <option>Jaboatão</option>
+            <option>Caruaru</option>
+            <option>Petrolina</option>
+          </select>
+        </label>
+
+        <label class="flex flex-col gap-1">
+          <span class="font-label-md text-label-md">Categoria</span>
+          <select id="docCategoria" class="h-10 px-3 bg-surface-container-low rounded-lg">
+            <option>Alvarás</option>
+            <option>Licenças Ambientais</option>
+            <option>Seguros</option>
+            <option>Contratos</option>
+            <option>Laudos Técnicos</option>
+          </select>
+        </label>
+
+        <label class="flex flex-col gap-1">
+          <span class="font-label-md text-label-md">Data de cadastro</span>
+          <input id="docCadastro" type="date" required class="h-10 px-3 bg-surface-container-low rounded-lg" />
+        </label>
+
+        <label class="flex flex-col gap-1">
+          <span class="font-label-md text-label-md">Validade</span>
+          <input id="docValidade" type="date" required class="h-10 px-3 bg-surface-container-low rounded-lg" />
+        </label>
+
+        <div class="md:col-span-2 flex justify-end gap-2 mt-2">
+          <button id="cancelModalBtn" type="button" class="h-10 px-4 rounded-lg bg-surface-container">Cancelar</button>
+          <button type="submit" class="h-10 px-4 rounded-lg bg-secondary-fixed text-on-secondary-fixed font-bold">Cadastrar documento</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===================== LÓGICA DA PÁGINA ===================== -->
+  <script>
+    /* ---------- Dados ---------- */
+    // Em produção isso viria de uma API; aqui é uma lista em memória.
+    const documentos = [
+      { id: 1,  nome: 'Alvará Sanitário e Municipal',                              codigo: 'ALV-REC-2024',    orgao: 'Prefeitura do Recife',   unidade: 'Recife',    categoria: 'Alvarás',              cadastro: '10/01/2024', validade: '15/12/2026' },
+      { id: 2,  nome: 'AVCB - Auto de Vistoria do Corpo de Bombeiros',              codigo: 'AVCB-OLI-2024',   orgao: 'Corpo de Bombeiros PE',   unidade: 'Olinda',    categoria: 'Laudos Técnicos',      cadastro: '12/02/2024', validade: '25/10/2026' },
+      { id: 3,  nome: 'Licença Ambiental de Operação',                             codigo: 'LAO-PET-2025',    orgao: 'CPRH',                    unidade: 'Petrolina', categoria: 'Licenças Ambientais',  cadastro: '01/05/2025', validade: '01/10/2026' },
+      { id: 4,  nome: 'Apólice de Seguro Patrimonial e Responsabilidade Civil',     codigo: 'PORTO-SEG-9091',  orgao: 'Porto Seguro Cia',        unidade: 'Jaboatão',  categoria: 'Seguros',              cadastro: '15/02/2026', validade: '15/02/2027' },
+      { id: 5,  nome: 'Contrato de Manutenção de Climatização',                    codigo: 'CTR-2024-041',    orgao: 'TermoTech Engenharia',    unidade: 'Caruaru',   categoria: 'Contratos',            cadastro: '01/08/2026', validade: '30/08/2027' },
+      { id: 6,  nome: 'Habite-se e Certidão de Regularidade Predial',              codigo: 'HAB-REC-2022',    orgao: 'Prefeitura do Recife',    unidade: 'Recife',    categoria: 'Alvarás',              cadastro: '20/09/2022', validade: '20/09/2027' },
+      { id: 7,  nome: 'Licença de Operação de Transporte',                         codigo: 'LOT-JAB-2026',    orgao: 'Órgão Estadual',          unidade: 'Jaboatão',  categoria: 'Licenças Ambientais',  cadastro: '05/03/2026', validade: '05/03/2027' },
+      { id: 8,  nome: 'Contrato de Locação do Galpão',                             codigo: 'CTR-OLI-118',     orgao: 'NexaLog',                 unidade: 'Olinda',    categoria: 'Contratos',            cadastro: '18/01/2026', validade: '18/01/2028' },
+      { id: 9,  nome: 'Laudo de Segurança Elétrica',                               codigo: 'LSE-CAR-026',     orgao: 'SegTech',                 unidade: 'Caruaru',   categoria: 'Laudos Técnicos',      cadastro: '11/04/2026', validade: '11/04/2027' },
+      { id: 10, nome: 'Seguro de Frota',                                           codigo: 'SEG-FRO-777',     orgao: 'Seguradora Nacional',     unidade: 'Petrolina', categoria: 'Seguros',              cadastro: '22/01/2026', validade: '22/01/2027' },
+      { id: 11, nome: 'Licença Ambiental do Galpão',                               codigo: 'LAG-REC-010',     orgao: 'CPRH',                    unidade: 'Recife',    categoria: 'Licenças Ambientais',  cadastro: '03/02/2026', validade: '03/02/2027' },
+      { id: 12, nome: 'Alvará de Funcionamento',                                   codigo: 'ALV-CAR-091',     orgao: 'Prefeitura de Caruaru',   unidade: 'Caruaru',   categoria: 'Alvarás',              cadastro: '09/01/2025', validade: '09/09/2026' },
+    ];
+
+    /* ---------- Estado ---------- */
+    const ITENS_POR_PAGINA = 6;
+    let paginaAtual = 1;
+
+    /* ---------- Referências de elementos ---------- */
+    const tabelaBody       = document.getElementById('documentsBody');
+    const inputBusca       = document.getElementById('searchInput');
+    const selectUnidade    = document.getElementById('filterUnidade');
+    const selectStatus     = document.getElementById('filterStatus');
+    const selectCategoria  = document.getElementById('filterCategoria');
+    const paginationInfo   = document.getElementById('paginationInfo');
+    const paginationCtrls  = document.getElementById('paginationControls');
+    const modal            = document.getElementById('documentModal');
+    const formNovoDoc      = document.getElementById('documentForm');
+
+    /* ---------- Utilidades de data / status ---------- */
+
+    // Converte "dd/mm/aaaa" em um objeto Date.
+    function parseDataBR(data) {
+      const [dia, mes, ano] = data.split('/').map(Number);
+      return new Date(ano, mes - 1, dia);
+    }
+
+    // Calcula o status de um documento a partir da validade.
+    function getStatusDocumento(doc) {
+      const hoje = new Date();
+      hoje.setHours(0, 0, 0, 0);
+
+      const validade = parseDataBR(doc.validade);
+      const diasRestantes = Math.ceil((validade - hoje) / 86_400_000);
+
+      if (diasRestantes < 0) {
+        return { texto: 'Vencido', classe: 'bg-error-container text-on-error-container', dias: diasRestantes };
+      }
+      if (diasRestantes <= 60) {
+        return { texto: 'Próximo do vencimento', classe: 'bg-secondary-fixed/30 text-on-secondary-fixed-variant', dias: diasRestantes };
+      }
+      return { texto: 'Válido', classe: 'bg-secondary-fixed/30 text-on-secondary-fixed-variant', dias: diasRestantes };
+    }
+
+    /* ---------- Filtros ---------- */
+
+    function aplicarFiltros() {
+      const termo = inputBusca.value.toLowerCase().trim();
+
+      return documentos.filter((doc) => {
+        const status = getStatusDocumento(doc).texto;
+        const textoBusca = [doc.nome, doc.codigo, doc.orgao, doc.unidade, doc.categoria]
+          .join(' ')
+          .toLowerCase();
+
+        const passaBusca     = !termo || textoBusca.includes(termo);
+        const passaUnidade   = !selectUnidade.value || doc.unidade === selectUnidade.value;
+        const passaStatus    = !selectStatus.value || status === selectStatus.value;
+        const passaCategoria = !selectCategoria.value || doc.categoria === selectCategoria.value;
+
+        return passaBusca && passaUnidade && passaStatus && passaCategoria;
+      });
+    }
+
+    /* ---------- Renderização da tabela ---------- */
+
+    function criarLinhaTabela(doc) {
+      const status = getStatusDocumento(doc);
+      const diasTexto = status.dias < 0
+        ? 'Vencido há ${Math.abs(status.dias)} dias'
+        : '${status.dias} dias restantes';
+
+      return 
+        <tr class="h-[64px] hover:bg-surface-container-low/60 transition-colors">
+          <td class="px-space-md">
+            <div class="flex items-center gap-space-sm">
+              <div class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center text-primary shrink-0">
+                <span class="material-symbols-outlined text-[20px]">description</span>
+              </div>
+              <div class="min-w-0">
+                <p class="font-title-md text-title-md text-on-surface font-semibold truncate">${doc.nome}</p>
+                <p class="font-body-sm text-body-sm text-outline">${doc.codigo} • ${doc.orgao}</p>
+              </div>
+            </div>
+          </td>
+          <td class="px-space-md whitespace-nowrap">
+            <span class="inline-flex items-center gap-1 font-body-md text-on-surface">
+              <span class="material-symbols-outlined text-[16px] text-outline">location_on</span>${doc.unidade}
+            </span>
+          </td>
+          <td class="px-space-md whitespace-nowrap">
+            <span class="px-2.5 py-1 rounded-full bg-surface-container-high text-on-surface text-label-sm font-label-sm">${doc.categoria}</span>
+          </td>
+          <td class="px-space-md whitespace-nowrap text-on-surface-variant font-body-sm text-body-sm">${doc.cadastro}</td>
+          <td class="px-space-md whitespace-nowrap">
+            <div class="flex flex-col">
+              <span class="font-title-md text-title-md text-on-surface">${doc.validade}</span>
+              <span class="font-body-sm text-body-sm text-outline">${diasTexto}</span>
+            </div>
+          </td>
+          <td class="px-space-md whitespace-nowrap">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full ${status.classe} text-label-sm font-label-sm font-bold">
+              <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>${status.texto}
+            </span>
+          </td>
+          <td class="px-space-md whitespace-nowrap text-right">
+            <div class="flex items-center justify-end gap-1 text-on-surface-variant">
+              <button type="button" title="Baixar Arquivo" onclick="baixarDocumento(${doc.id})" class="p-1.5 hover:text-primary hover:bg-surface-container rounded-md transition-colors">
+                <span class="material-symbols-outlined text-[18px]">download</span>
+              </button>
+              <button type="button" title="Visualizar" onclick="visualizarDocumento(${doc.id})" class="p-1.5 hover:text-primary hover:bg-surface-container rounded-md transition-colors">
+                <span class="material-symbols-outlined text-[18px]">visibility</span>
+              </button>
+              <button type="button" title="Mais opções" onclick="maisOpcoes(${doc.id})" class="p-1.5 hover:text-primary hover:bg-surface-container rounded-md transition-colors">
+                <span class="material-symbols-outlined text-[18px]">more_vert</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      ;
+    }
+
+    function renderizarPaginacao(totalPaginas) {
+      paginationCtrls.innerHTML = '';
+
+      const botaoAnterior = document.createElement('button');
+      botaoAnterior.className = 'w-8 h-8 rounded-lg flex items-center justify-center hover:bg-surface-container';
+      botaoAnterior.innerHTML = '<span class="material-symbols-outlined text-[18px]">chevron_left</span>';
+      botaoAnterior.disabled = paginaAtual === 1;
+      botaoAnterior.onclick = () => { paginaAtual--; renderizarTabela(); };
+      paginationCtrls.appendChild(botaoAnterior);
+
+      for (let pagina = 1; pagina <= totalPaginas; pagina++) {
+        const botaoPagina = document.createElement('button');
+        botaoPagina.textContent = pagina;
+        botaoPagina.className = 'w-8 h-8 rounded-lg flex items-center justify-center font-label-md ' +
+          (pagina === paginaAtual
+            ? 'bg-primary text-on-primary font-bold'
+            : 'text-on-surface hover:bg-surface-container');
+        botaoPagina.onclick = () => { paginaAtual = pagina; renderizarTabela(); };
+        paginationCtrls.appendChild(botaoPagina);
+      }
+
+      const botaoProximo = document.createElement('button');
+      botaoProximo.className = 'w-8 h-8 rounded-lg flex items-center justify-center hover:bg-surface-container';
+      botaoProximo.innerHTML = '<span class="material-symbols-outlined text-[18px]">chevron_right</span>';
+      botaoProximo.disabled = paginaAtual === totalPaginas;
+      botaoProximo.onclick = () => { paginaAtual++; renderizarTabela(); };
+      paginationCtrls.appendChild(botaoProximo);
+    }
+
+    function renderizarTabela() {
+      const listaFiltrada = aplicarFiltros();
+      const totalPaginas = Math.max(1, Math.ceil(listaFiltrada.length / ITENS_POR_PAGINA));
+
+      if (paginaAtual > totalPaginas) paginaAtual = totalPaginas;
+
+      const indiceInicial = (paginaAtual - 1) * ITENS_POR_PAGINA;
+      const itensDaPagina = listaFiltrada.slice(indiceInicial, indiceInicial + ITENS_POR_PAGINA);
+
+      tabelaBody.innerHTML = itensDaPagina.map(criarLinhaTabela).join('');
+
+      paginationInfo.textContent = listaFiltrada.length
+        ? `Mostrando ${indiceInicial + 1} a ${Math.min(indiceInicial + ITENS_POR_PAGINA, listaFiltrada.length)} de ${listaFiltrada.length} documentos`
+        : 'Nenhum documento encontrado';
+
+      renderizarPaginacao(totalPaginas);
+    }
+
+    function atualizarListaComFiltros() {
+      paginaAtual = 1;
+      renderizarTabela();
+    }
+
+    /* ---------- Ações por documento ---------- */
+
+    function visualizarDocumento(id) {
+      const doc = documentos.find((d) => d.id === id);
+      const status = getStatusDocumento(doc);
+
+      alert(
+        `DOCUMENTO\n\n` +
+        `${doc.nome}\n` +
+        `Código: ${doc.codigo}\n` +
+        `Órgão: ${doc.orgao}\n` +
+        `Unidade: ${doc.unidade}\n` +
+        `Categoria: ${doc.categoria}\n` +
+        `Cadastro: ${doc.cadastro}\n` +
+        `Validade: ${doc.validade}\n` +
+        `Status: ${status.texto}`
+      );
+    }
+
+    function baixarDocumento(id) {
+      const doc = documentos.find((d) => d.id === id);
+      const conteudo =
+        `NexaLog - Documento\n` +
+        `Nome: ${doc.nome}\n` +
+        `Código: ${doc.codigo}\n` +
+        `Órgão: ${doc.orgao}\n` +
+        `Unidade: ${doc.unidade}\n` +
+        `Categoria: ${doc.categoria}\n` +
+        `Cadastro: ${doc.cadastro}\n` +
+        `Validade: ${doc.validade}\n` +
+        `Status: ${getStatusDocumento(doc).texto}`;
+
+      const blob = new Blob([conteudo], { type: 'text/plain' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `${doc.codigo}.txt`;
+      link.click();
+      URL.revokeObjectURL(link.href);
+    }
+
+    function maisOpcoes(id) {
+      const doc = documentos.find((d) => d.id === id);
+      const confirmarExclusao = confirm(`Documento: ${doc.nome}\n\nDeseja excluir este documento?`);
+
+      if (confirmarExclusao) {
+        const indice = documentos.findIndex((d) => d.id === id);
+        documentos.splice(indice, 1);
+        renderizarTabela();
+      }
+    }
+
+    /* ---------- Modal "Novo Documento" ---------- */
+
+    function abrirModal() {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.getElementById('docCadastro').value = new Date().toISOString().slice(0, 10);
+    }
+
+    function fecharModal() {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function converterDataParaBR(dataISO) {
+      // "aaaa-mm-dd" -> "dd/mm/aaaa"
+      return dataISO.split('-').reverse().join('/');
+    }
+
+    function cadastrarNovoDocumento(evento) {
+      evento.preventDefault();
+
+      documentos.unshift({
+        id: Date.now(),
+        nome: document.getElementById('docNome').value,
+        codigo: document.getElementById('docCodigo').value,
+        orgao: document.getElementById('docOrgao').value,
+        unidade: document.getElementById('docUnidade').value,
+        categoria: document.getElementById('docCategoria').value,
+        cadastro: converterDataParaBR(document.getElementById('docCadastro').value),
+        validade: converterDataParaBR(document.getElementById('docValidade').value),
+      });
+
+      formNovoDoc.reset();
+      fecharModal();
+      atualizarListaComFiltros();
+      alert('Documento cadastrado com sucesso!');
+    }
+
+    /* ---------- Event listeners ---------- */
+
+    inputBusca.addEventListener('input', atualizarListaComFiltros);
+    selectUnidade.addEventListener('change', atualizarListaComFiltros);
+    selectStatus.addEventListener('change', atualizarListaComFiltros);
+    selectCategoria.addEventListener('change', atualizarListaComFiltros);
+
+    document.getElementById('newDocumentBtn').addEventListener('click', abrirModal);
+    document.getElementById('closeModalBtn').addEventListener('click', fecharModal);
+    document.getElementById('cancelModalBtn').addEventListener('click', fecharModal);
+    modal.addEventListener('click', (evento) => { if (evento.target === modal) fecharModal(); });
+    formNovoDoc.addEventListener('submit', cadastrarNovoDocumento);
+
+    /* ---------- Inicialização ---------- */
+    renderizarTabela();
+  </script>
+</body>
+</html>
