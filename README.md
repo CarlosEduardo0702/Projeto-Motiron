@@ -1,9 +1,9 @@
 # Projeto-Motiron
 
 
-🏢 NexaLog — Gestão e Logística
+🏢 Moovere — Gestão e Logística
 
-A NexaLog é uma empresa fictícia do setor de logística e distribuição, responsável pelo armazenamento e transporte de produtos para outras empresas.
+A Moovere é uma empresa fictícia do setor de logística e distribuição, responsável pelo armazenamento e transporte de produtos para outras empresas.
 
 A empresa possui diversas unidades espalhadas pelo Brasil e utiliza uma plataforma web para centralizar e facilitar o gerenciamento das unidades, documentos e tarefas.
 
