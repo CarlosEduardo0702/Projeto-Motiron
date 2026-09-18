@@ -1,13 +1,9 @@
-//       exibe os documentos cadastrados e permite acompanhar seu status de 
-          validade. 
-
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NexaLog · Documentos</title>
+  <title>Moovere · Documentos</title>
 
   <!-- Fontes -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -430,7 +426,7 @@
       <div class="flex items-center justify-between mb-space-md">
         <div>
           <h2 class="font-headline-md text-headline-md text-on-surface">Novo Documento</h2>
-          <p class="font-body-sm text-body-sm text-on-surface-variant">Cadastre um documento da NexaLog.</p>
+          <p class="font-body-sm text-body-sm text-on-surface-variant">Cadastre um documento da Moovere.</p>
         </div>
         <button id="closeModalBtn" type="button" class="p-2 rounded-lg hover:bg-surface-container">
           <span class="material-symbols-outlined">close</span>
@@ -505,7 +501,7 @@
       { id: 5,  nome: 'Contrato de Manutenção de Climatização',                    codigo: 'CTR-2024-041',    orgao: 'TermoTech Engenharia',    unidade: 'Caruaru',   categoria: 'Contratos',            cadastro: '01/08/2026', validade: '30/08/2027' },
       { id: 6,  nome: 'Habite-se e Certidão de Regularidade Predial',              codigo: 'HAB-REC-2022',    orgao: 'Prefeitura do Recife',    unidade: 'Recife',    categoria: 'Alvarás',              cadastro: '20/09/2022', validade: '20/09/2027' },
       { id: 7,  nome: 'Licença de Operação de Transporte',                         codigo: 'LOT-JAB-2026',    orgao: 'Órgão Estadual',          unidade: 'Jaboatão',  categoria: 'Licenças Ambientais',  cadastro: '05/03/2026', validade: '05/03/2027' },
-      { id: 8,  nome: 'Contrato de Locação do Galpão',                             codigo: 'CTR-OLI-118',     orgao: 'NexaLog',                 unidade: 'Olinda',    categoria: 'Contratos',            cadastro: '18/01/2026', validade: '18/01/2028' },
+      { id: 8,  nome: 'Contrato de Locação do Galpão',                             codigo: 'CTR-OLI-118',     orgao: 'Moovere',                 unidade: 'Olinda',    categoria: 'Contratos',            cadastro: '18/01/2026', validade: '18/01/2028' },
       { id: 9,  nome: 'Laudo de Segurança Elétrica',                               codigo: 'LSE-CAR-026',     orgao: 'SegTech',                 unidade: 'Caruaru',   categoria: 'Laudos Técnicos',      cadastro: '11/04/2026', validade: '11/04/2027' },
       { id: 10, nome: 'Seguro de Frota',                                           codigo: 'SEG-FRO-777',     orgao: 'Seguradora Nacional',     unidade: 'Petrolina', categoria: 'Seguros',              cadastro: '22/01/2026', validade: '22/01/2027' },
       { id: 11, nome: 'Licença Ambiental do Galpão',                               codigo: 'LAG-REC-010',     orgao: 'CPRH',                    unidade: 'Recife',    categoria: 'Licenças Ambientais',  cadastro: '03/02/2026', validade: '03/02/2027' },
@@ -577,10 +573,10 @@
     function criarLinhaTabela(doc) {
       const status = getStatusDocumento(doc);
       const diasTexto = status.dias < 0
-        ? 'Vencido há ${Math.abs(status.dias)} dias'
-        : '${status.dias} dias restantes';
+        ? `Vencido há ${Math.abs(status.dias)} dias`
+        : `${status.dias} dias restantes`;
 
-      return 
+      return `
         <tr class="h-[64px] hover:bg-surface-container-low/60 transition-colors">
           <td class="px-space-md">
             <div class="flex items-center gap-space-sm">
@@ -627,7 +623,7 @@
             </div>
           </td>
         </tr>
-      ;
+      `;
     }
 
     function renderizarPaginacao(totalPaginas) {
@@ -704,7 +700,7 @@
     function baixarDocumento(id) {
       const doc = documentos.find((d) => d.id === id);
       const conteudo =
-        `NexaLog - Documento\n` +
+        `Moovere - Documento\n` +
         `Nome: ${doc.nome}\n` +
         `Código: ${doc.codigo}\n` +
         `Órgão: ${doc.orgao}\n` +
