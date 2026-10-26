@@ -1,915 +1,971 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Moovere · Documentos</title>
- 
-  <!-- Fontes -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&display=swap"
-  />
-  <link
-    rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
-  />
-  <link
-    rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-  />
- 
-  <!-- Reset mínimo -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>LogMagna • Cadastro de produto</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+
   <style>
-    @layer base {
-      html, body { margin: 0; padding: 0; }
-      body { overscroll-behavior: none; }
-      main > :first-child { margin-top: 0 !important; }
-      main > :last-child { margin-bottom: 0 !important; }
+
+
+
+    :root {
+      --bg: #f7f8f4;
+      --panel: #ffffff;
+      --ink: #1e3328;
+      --ink-soft: #5b6b62;
+      --green: #244638;
+      --green-soft: #e7eedf;
+      --line: #dcdfdd;
+      --error: #b3261e;
+      --side-start: #1e3328;
+      --side-end: #2f5a47;
+
+      color-scheme: light;
+      box-sizing: border-box;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
     }
-    ::-webkit-scrollbar { display: none; }
-  </style>
- 
-  <!-- Tailwind + tokens de design (cores, tipografia, espaçamento) -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script id="tailwind-config">
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          colors: {
-            "on-secondary-fixed-variant": "#304f00",
-            "on-secondary-container": "#457000",
-            "surface-container-low": "#eff4ff",
-            "secondary-container": "#acf847",
-            "on-tertiary-fixed-variant": "#004b73",
-            "surface-variant": "#d3e4fe",
-            "surface-bright": "#f8f9ff",
-            "inverse-surface": "#213145",
-            "error-container": "#ffdad6",
-            "surface-tint": "#3c6658",
-            "secondary": "#416900",
-            "on-tertiary-container": "#42a4e8",
-            "on-surface-variant": "#414845",
-            "primary": "#00241a",
-            "surface-container-high": "#dce9ff",
-            "inverse-primary": "#a3d0be",
-            "secondary-fixed-dim": "#91db2a",
-            "surface-dim": "#cbdbf5",
-            "primary-fixed-dim": "#a3d0be",
-            "surface": "#f8f9ff",
-            "outline-variant": "#c0c8c3",
-            "error": "#ba1a1a",
-            "on-tertiary": "#ffffff",
-            "surface-container-highest": "#d3e4fe",
-            "tertiary-fixed-dim": "#93ccff",
-            "on-primary": "#ffffff",
-            "primary-fixed": "#beedd9",
-            "primary-container": "#0d3b2e",
-            "outline": "#717974",
-            "surface-container-lowest": "#ffffff",
-            "on-secondary-fixed": "#102000",
-            "tertiary-container": "#003757",
-            "on-primary-fixed-variant": "#234e40",
-            "on-surface": "#0b1c30",
-            "secondary-fixed": "#acf847",
-            "background": "#f8f9ff",
-            "on-error-container": "#93000a",
-            "tertiary-fixed": "#cce5ff",
-            "inverse-on-surface": "#eaf1ff",
-            "tertiary": "#002136",
-            "on-primary-fixed": "#002117",
-            "on-primary-container": "#79a694",
-            "on-background": "#0b1c30",
-            "surface-container": "#e5eeff",
-            "on-secondary": "#ffffff",
-            "on-tertiary-fixed": "#001d31",
-            "on-error": "#ffffff",
-          },
-          borderRadius: {
-            DEFAULT: "0.25rem",
-            lg: "0.5rem",
-            xl: "0.75rem",
-            full: "9999px",
-          },
-          spacing: {
-            "space-xl": "2rem",
-            "margin": "2rem",
-            "gutter-mobile": "1rem",
-            "space-sm": "0.5rem",
-            "space-md": "1rem",
-            "gutter": "1.5rem",
-            "space-2xl": "3rem",
-            "space-xs": "0.25rem",
-            "space-lg": "1.5rem",
-            "margin-mobile": "1rem",
-          },
-          fontFamily: {
-            "body-lg": ["Inter"],
-            "headline-lg": ["Plus Jakarta Sans"],
-            "body-sm": ["Inter"],
-            "body-md": ["Inter"],
-            "headline-md": ["Plus Jakarta Sans"],
-            "title-md": ["Inter"],
-            "label-sm": ["Inter"],
-            "headline-sm": ["Plus Jakarta Sans"],
-            "title-lg": ["Inter"],
-            "label-md": ["Inter"],
-            "headline-lg-mobile": ["Plus Jakarta Sans"],
-            "display": ["Plus Jakarta Sans"],
-          },
-          fontSize: {
-            "body-lg": ["16px", { lineHeight: "24px", letterSpacing: "0em", fontWeight: "400" }],
-            "headline-lg": ["28px", { lineHeight: "36px", letterSpacing: "-0.02em", fontWeight: "700" }],
-            "body-sm": ["12px", { lineHeight: "16px", letterSpacing: "0.01em", fontWeight: "400" }],
-            "body-md": ["14px", { lineHeight: "20px", letterSpacing: "0em", fontWeight: "400" }],
-            "headline-md": ["22px", { lineHeight: "28px", letterSpacing: "-0.015em", fontWeight: "600" }],
-            "title-md": ["14px", { lineHeight: "20px", letterSpacing: "0em", fontWeight: "600" }],
-            "label-sm": ["11px", { lineHeight: "14px", letterSpacing: "0.03em", fontWeight: "600" }],
-            "headline-sm": ["18px", { lineHeight: "24px", letterSpacing: "-0.01em", fontWeight: "600" }],
-            "title-lg": ["16px", { lineHeight: "24px", letterSpacing: "-0.005em", fontWeight: "600" }],
-            "label-md": ["13px", { lineHeight: "18px", letterSpacing: "0.005em", fontWeight: "500" }],
-            "headline-lg-mobile": ["24px", { lineHeight: "32px", letterSpacing: "-0.015em", fontWeight: "700" }],
-            "display": ["36px", { lineHeight: "44px", letterSpacing: "-0.025em", fontWeight: "700" }],
-          },
-        },
-      },
-    };
-  </script>
- 
-  <!-- Estilos: toast e menu do perfil -->
-  <style>
-    #toastContainer {
-      position: fixed; top: 80px; right: 24px; z-index: 200;
-      display: flex; flex-direction: column; gap: 12px; pointer-events: none;
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #131c17;
+        --panel: #1b2822;
+        --ink: #e9efe9;
+        --ink-soft: #9db0a4;
+        --green: #8fc3a6;
+        --green-soft: #233a2e;
+        --line: #2d3e35;
+        --error: #ff8a80;
+        color-scheme: dark;
+      }
     }
+
+    :root[data-theme="dark"] {
+      --bg: #131c17;
+      --panel: #1b2822;
+      --ink: #e9efe9;
+      --ink-soft: #9db0a4;
+      --green: #8fc3a6;
+      --green-soft: #233a2e;
+      --line: #2d3e35;
+      --error: #ff8a80;
+      color-scheme: dark;
+    }
+
+
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { height: 100%; }
+
+    body {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      min-height: 100%;
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 400 14px/1.5 Inter, system-ui, Arial, sans-serif;
+    }
+
+    h1 { margin: 0; font-size: 26px; letter-spacing: -0.01em; }
+    label { font-size: 13px; font-weight: 500; }
+
+    :is(input, select, button, a):focus-visible {
+      outline: 2px solid var(--green);
+      outline-offset: 2px;
+    }
+
+
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      height: 100vh;
+      padding: 24px 14px;
+      background: linear-gradient(180deg, var(--side-start), var(--side-end));
+      color: #e7eedf;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 8px 22px;
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .brand svg { width: 26px; height: 26px; }
+
+    .sidebar-title {
+      padding: 0 10px 6px;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      opacity: 0.65;
+    }
+
+    .menu a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      border-radius: 10px;
+      color: inherit;
+      font-weight: 500;
+      text-decoration: none;
+    }
+    .menu a svg { flex: none; width: 18px; height: 18px; }
+    .menu a:hover { background: rgba(255, 255, 255, 0.08); }
+    .menu a[aria-current] { background: rgba(255, 255, 255, 0.14); }
+
+    .help-card {
+      margin-top: auto;
+      padding: 14px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      font-size: 13px;
+    }
+    .help-card b { display: block; margin-bottom: 2px; }
+
+    /* Perfil + menu suspenso */
+    .profile { position: relative; margin-top: 0; }
+
+    .profile-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 10px 6px;
+      border: 0;
+      border-radius: 12px;
+      background: none;
+      color: inherit;
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+    }
+    .profile-btn:hover { background: rgba(255, 255, 255, 0.08); }
+    .profile-btn small { display: block; opacity: 0.7; }
+
+    .avatar {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--green-soft);
+      color: #1e3328;
+      font-weight: 600;
+    }
+
+    .profile-menu {
+      position: absolute;
+      bottom: calc(100% + 6px);
+      left: 0;
+      right: 0;
+      z-index: 20;
+      padding: 6px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--panel);
+      color: var(--ink);
+      box-shadow: 0 12px 32px rgba(11, 28, 48, 0.25);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(6px);
+      transition: opacity 0.15s, transform 0.15s, visibility 0.15s;
+    }
+    .profile-menu.open { opacity: 1; visibility: visible; transform: none; }
+
+    .profile-menu button {
+      display: block;
+      width: 100%;
+      padding: 9px 10px;
+      border: 0;
+      border-radius: 8px;
+      background: none;
+      color: inherit;
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+    }
+    .profile-menu button:hover { background: var(--green-soft); }
+    .profile-menu .danger { color: var(--error); }
+
+
+
+
+    .main { min-width: 0; }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 32px;
+      background: linear-gradient(90deg, var(--side-end), var(--side-start) 0%, var(--side-end) 55%, #cfd9cf);
+      color: #fff;
+      font-size: 13px;
+    }
+    .topbar-status {
+      padding: 4px 12px;
+      border-radius: 99px;
+      background: var(--green-soft);
+      color: #1e3328;
+      font-weight: 500;
+    }
+
+    .page { max-width: 1160px; padding: 28px 32px 40px; }
+
+    .page-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .page-head p { margin: 4px 0 0; color: var(--ink-soft); }
+
+    .badge {
+      padding: 5px 12px;
+      border-radius: 99px;
+      background: var(--green-soft);
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.7fr) minmax(280px, 1fr);
+      gap: 20px;
+      align-items: start;
+    }
+
+
+
+
+    .panel {
+      margin-bottom: 20px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--panel);
+    }
+    .panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .panel-head h2 { margin: 0; font-size: 16px; }
+    .panel-head span { color: var(--ink-soft); font-size: 12px; }
+
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .field { display: flex; flex-direction: column; gap: 4px; margin-bottom: 16px; }
+
+    input, select {
+      width: 100%;
+      padding: 8px 2px;
+      border: 0;
+      border-bottom: 1.5px solid var(--line);
+      border-radius: 0;
+      outline: 0;
+      background: transparent;
+      color: var(--ink);
+      font: inherit;
+    }
+    select { background: var(--panel); }
+    input:focus, select:focus { border-bottom-color: var(--green); }
+
+    .error-msg { display: none; color: var(--error); font-size: 12px; }
+    .field.invalid .error-msg { display: block; }
+    .field.invalid :is(input, select) { border-bottom-color: var(--error); }
+
+    /* Anexo */
+    .file-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 4px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      background: var(--green-soft);
+    }
+    .file-box svg { flex: none; width: 22px; height: 22px; color: var(--green); }
+    .file-info { flex: 1; min-width: 0; }
+    .file-info b {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .file-info small { color: var(--ink-soft); }
+
+    .link-btn {
+      border: 0;
+      background: none;
+      color: var(--green);
+      font: inherit;
+      font-weight: 600;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    /* Confirmação e ações */
+    .consent { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 6px; }
+    .consent input { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--green); }
+    .consent label { font-weight: 400; }
+    #consentError { display: none; margin: 0; }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .btn {
+      padding: 11px 20px;
+      border: 1.5px solid var(--line);
+      border-radius: 10px;
+      background: var(--panel);
+      color: var(--ink);
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-primary { background: #1e3328; border-color: #1e3328; color: #fff; }
+    :root[data-theme="dark"] .btn-primary { background: #8fc3a6; border-color: #8fc3a6; color: #10201a; }
+
+
+
+    .summary-tag {
+      display: inline-block;
+      margin-bottom: 14px;
+      padding: 3px 10px;
+      border-radius: 99px;
+      background: var(--green-soft);
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .summary-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--line);
+    }
+    .summary-item small { display: block; color: var(--ink-soft); }
+
+    .summary-icon {
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: var(--green-soft);
+      color: var(--green);
+    }
+    .summary-icon svg { width: 20px; height: 20px; }
+
+    .summary-line { display: flex; justify-content: space-between; padding: 4px 0; }
+    .summary-line span:first-child { color: var(--ink-soft); }
+
+    .summary-total { margin-top: 10px; padding-top: 12px; border-top: 1px solid var(--line); }
+    .summary-total small { color: var(--ink-soft); }
+    .summary-total strong { display: block; font-size: 30px; letter-spacing: -0.02em; }
+
+    .notice { padding: 18px; border-radius: 14px; background: var(--green-soft); }
+    .notice svg { width: 20px; height: 20px; color: var(--green); }
+    .notice b { display: block; margin: 6px 0 4px; }
+    .notice p { margin: 0; color: var(--ink-soft); font-size: 13px; }
+
+    .demo-note { margin-top: 6px; color: var(--ink-soft); font-size: 12px; }
+
+    .product-list { margin: 0; padding: 0; list-style: none; }
+    .product-list li {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .product-list li:last-child { border-bottom: 0; }
+    .product-list small { display: block; color: var(--ink-soft); }
+    .product-list .remove {
+      border: 0;
+      background: none;
+      color: var(--ink-soft);
+      font-size: 12px;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    .empty-text { margin: 0; color: var(--ink-soft); font-size: 13px; }
+
+
+
+
+    #toasts {
+      position: fixed;
+      top: 64px;
+      right: 20px;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      pointer-events: none;
+    }
+
     .toast {
-      --toast-cor: #416900; --toast-fundo: #acf84738; --toast-barra: #91db2a;
-      pointer-events: auto; position: relative; overflow: hidden;
-      display: flex; align-items: flex-start; gap: 14px;
-      width: 360px; max-width: calc(100vw - 48px);
-      padding: 16px 16px 20px; background: #fff; border-radius: 14px;
-      box-shadow: 0 12px 32px rgba(11, 28, 48, .16), 0 0 0 1px rgba(11, 28, 48, .05);
-      animation: toastEntrar .4s cubic-bezier(.2, .9, .3, 1.2) forwards;
+      position: relative;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      overflow: hidden;
+      width: 340px;
+      max-width: calc(100vw - 40px);
+      padding: 14px 14px 18px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--panel);
+      box-shadow: 0 12px 32px rgba(11, 28, 48, 0.18);
+      pointer-events: auto;
     }
-    .toast.erro { --toast-cor: #ba1a1a; --toast-fundo: #ffdad6; --toast-barra: #ba1a1a; }
-    .toast.info { --toast-cor: #004b73; --toast-fundo: #cce5ff; --toast-barra: #42a4e8; }
-    .toast.saindo { animation: toastSair .3s ease forwards; }
-    .toast-icone {
-      width: 40px; height: 40px; flex-shrink: 0; border-radius: 12px;
-      display: grid; place-items: center;
-      background: var(--toast-fundo); color: var(--toast-cor);
+    .toast-icon {
+      display: grid;
+      flex: none;
+      place-items: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--green-soft);
+      color: var(--green);
     }
-    .toast-icone .material-symbols-outlined { font-size: 24px; font-variation-settings: 'FILL' 1, 'wght' 600; }
-    .toast-corpo { flex: 1; min-width: 0; padding-top: 1px; }
-    .toast-titulo { font: 700 14px/20px 'Plus Jakarta Sans', sans-serif; color: #0b1c30; }
-    .toast-texto  { font: 400 13px/18px Inter, sans-serif; color: #414845; margin-top: 2px; }
-    .toast-fechar {
-      border: 0; background: transparent; color: #717974; cursor: pointer;
-      padding: 2px; border-radius: 8px; line-height: 0; transition: background .2s;
+    .toast-icon svg { width: 20px; height: 20px; }
+    .toast b { display: block; }
+    .toast-text { color: var(--ink-soft); font-size: 13px; }
+
+    .toast-close {
+      margin-left: auto;
+      padding: 2px 6px;
+      border: 0;
+      border-radius: 6px;
+      background: none;
+      color: var(--ink-soft);
+      font-size: 18px;
+      line-height: 1;
+      cursor: pointer;
     }
-    .toast-fechar:hover { background: #e5eeff; color: #0b1c30; }
-    .toast-fechar .material-symbols-outlined { font-size: 18px; }
-    .toast-barra {
-      position: absolute; left: 0; bottom: 0; height: 4px; width: 100%;
-      background: var(--toast-barra); transform-origin: left;
-      animation: toastBarra var(--toast-duracao, 4s) linear forwards;
+
+    .toast-bar {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 4px;
+      background: #91db2a;
+      transform-origin: left;
+      animation: toast-bar 4s linear forwards;
     }
-    .toast:hover .toast-barra { animation-play-state: paused; }
-    @keyframes toastEntrar { from { opacity: 0; transform: translateX(60px) scale(.96); } to { opacity: 1; transform: none; } }
-    @keyframes toastSair   { to   { opacity: 0; transform: translateX(60px) scale(.96); } }
-    @keyframes toastBarra  { from { transform: scaleX(1); } to { transform: scaleX(0); } }
- 
-    /* Menu do perfil */
-    #perfilMenu {
-      opacity: 0; visibility: hidden; transform: translateY(-6px) scale(.98); transform-origin: top right;
-      transition: opacity .18s ease, transform .18s ease, visibility .18s;
+    .toast:hover .toast-bar { animation-play-state: paused; }
+
+    .toast.error .toast-icon { background: #ffdad6; color: #ba1a1a; }
+    .toast.error .toast-bar { background: #ba1a1a; }
+
+    @keyframes toast-bar { to { transform: scaleX(0); } }
+    @keyframes toast-in { from { opacity: 0; transform: translateX(50px); } }
+
+
+
+    @media (prefers-reduced-motion: no-preference) {
+      input, select { transition: border-color 0.15s; }
+      .toast { animation: toast-in 0.3s ease; }
     }
-    #perfilMenu.aberto { opacity: 1; visibility: visible; transform: none; }
-    #perfilBtn[aria-expanded="true"] #perfilSeta { transform: rotate(180deg); }
+
+    @media (max-width: 900px) {
+      body { grid-template-columns: 1fr; }
+
+      .sidebar {
+        position: static;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        height: auto;
+        padding: 12px;
+      }
+      .brand { padding: 0 8px; }
+      .sidebar-title, .help-card, .profile { display: none; }
+      .menu { display: flex; flex-wrap: wrap; gap: 2px; }
+
+      .topbar { padding: 12px 16px; }
+      .page { padding: 20px 16px; }
+      .layout { grid-template-columns: 1fr; }
+      .row { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
- 
-<body class="bg-surface font-body-md text-body-md text-on-surface antialiased min-h-screen">
- 
-  <!-- ===================== SIDEBAR ===================== -->
-  <aside class="fixed left-0 top-0 bottom-0 w-64 bg-primary-container z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
-    <div class="flex flex-col">
-      <!-- Logo -->
-      <div class="h-16 px-space-lg flex items-center gap-space-sm bg-primary/20">
-        <img
-          class="h-8 w-auto object-contain"
-          alt="Logo Movere Logística"
-          src="https://lh3.googleusercontent.com/aida/AEtjO1UN1vecR9_lq-98xc7FAt21Bsgx8G5TEMGEyzVd6JvaljHRXqhTFv0Crkhn2PRF1E92r4TsLfgeBPs6oCTAVDKkCrvK8ErDGEGptetF45Ii5VZ_WLG2qWCm6S3jbw7nablpKqSpavMmOSXVFJbL7p0m_o70EkSD0L6JMPjtQbHYCF0mkiDYhkksFia5l03F0sW1Zm-0narI-ctdZWYovxkPZo38HRkUlhABQneb1qg2zYGxDYZ0A9It6A"
-        />
-        <span class="font-headline-sm text-headline-sm text-on-primary tracking-tight font-bold">Movere</span>
-      </div>
- 
-      <div class="px-space-md py-space-sm">
-        <span class="font-label-sm text-label-sm uppercase tracking-wider text-on-primary-container/80 px-space-sm">
-          Operação &amp; Controle
-        </span>
-      </div>
- 
-      <!-- Navegação principal -->
-      <nav
-        class="flex flex-col gap-1 px-space-sm"
-        data-active-classes="bg-surface-container-lowest/10 text-on-primary font-title-md border-l-4 border-secondary-fixed shadow-[0_1px_8px_rgba(0,0,0,0.04)]"
-      >
-        <a href="#" data-path="visao-geral" class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-primary-container hover:bg-surface-container-lowest/5 hover:text-on-primary transition-all">
-          <span class="material-symbols-outlined text-[20px]">dashboard</span>
-          <span class="font-title-md text-title-md">Visão Geral</span>
-        </a>
-        <a href="#" data-path="unidades" class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-primary-container hover:bg-surface-container-lowest/5 hover:text-on-primary transition-all">
-          <span class="material-symbols-outlined text-[20px]">apartment</span>
-          <span class="font-title-md text-title-md">Unidades</span>
-        </a>
-        <a href="#" data-path="documentos" aria-current="page" class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg transition-all bg-surface-container-lowest/10 text-on-primary font-title-md border-l-4 border-secondary-fixed shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
-          <span class="material-symbols-outlined text-[20px]">description</span>
-          <span class="font-title-md text-title-md">Documentos</span>
-        </a>
-        <a href="#" data-path="tarefas" class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-primary-container hover:bg-surface-container-lowest/5 hover:text-on-primary transition-all">
-          <span class="material-symbols-outlined text-[20px]">check_box</span>
-          <span class="font-title-md text-title-md">Tarefas</span>
-        </a>
-        <a href="#" data-path="relatorios" class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-primary-container hover:bg-surface-container-lowest/5 hover:text-on-primary transition-all">
-          <span class="material-symbols-outlined text-[20px]">bar_chart</span>
-          <span class="font-title-md text-title-md">Relatórios</span>
-        </a>
-      </nav>
+
+<body>
+
+
+  <aside class="sidebar">
+    <div class="brand">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10z"/>
+        <path d="M2 21c0-3 1.9-5.5 5-7"/>
+      </svg>
+      LogMagna
     </div>
- 
-    <!-- Navegação secundária -->
-    <div class="p-space-sm bg-primary/30 flex flex-col gap-1">
-      <nav class="flex flex-col gap-1" data-active-classes="bg-surface-container-lowest/10 text-on-primary font-title-md border-l-4 border-secondary-fixed">
-        <a href="#" data-path="configuracoes" class="flex items-center gap-space-sm px-space-md py-2 rounded-lg text-on-primary-container hover:bg-surface-container-lowest/5 hover:text-on-primary transition-all">
-          <span class="material-symbols-outlined text-[20px]">settings</span>
-          <span class="font-title-md text-title-md">Configurações</span>
-        </a>
-        <a href="#" data-path="sair" class="flex items-center gap-space-sm px-space-md py-2 rounded-lg text-on-primary-container hover:bg-surface-container-lowest/5 hover:text-on-primary transition-all">
-          <span class="material-symbols-outlined text-[20px]">logout</span>
-          <span class="font-title-md text-title-md">Sair</span>
-        </a>
-      </nav>
+
+    <div class="sidebar-title">ÁREA DO CLIENTE</div>
+
+    <nav class="menu">
+      <a href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/>
+          <rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>
+        </svg>
+        Visão geral
+      </a>
+      <a href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round">
+          <path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/>
+        </svg>
+        Serviços contratados
+      </a>
+      <a href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+          <circle cx="6" cy="19" r="2"/><circle cx="18" cy="5" r="2"/>
+          <path d="M8 19h8a3 3 0 0 0 0-6H8a3 3 0 0 1 0-6h8"/>
+        </svg>
+        Rastrear encomenda
+      </a>
+      <a href="#" aria-current="page">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+          <circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/>
+        </svg>
+        Cadastrar produto
+      </a>
+    </nav>
+
+    <div class="help-card">
+      <b>Tudo em um só lugar.</b>
+      Organize suas compras e acompanhe cada entrega.
+    </div>
+
+    <div class="profile" id="profile">
+      <div class="profile-menu" id="profileMenu" role="menu">
+        <button type="button" role="menuitem" data-label="Meu perfil">Meu perfil</button>
+        <button type="button" role="menuitem" data-label="Configurações">Configurações</button>
+        <button type="button" role="menuitem" data-label="Central de ajuda">Central de ajuda</button>
+        <button type="button" role="menuitem" class="danger" data-label="Sair">Sair</button>
+      </div>
+      <button type="button" class="profile-btn" id="profileBtn" aria-haspopup="true" aria-expanded="false">
+        <div class="avatar">AS</div>
+        <div>Ana Silva<small>Conta demonstrativa</small></div>
+      </button>
     </div>
   </aside>
- 
-  <div class="pl-64">
- 
-    <!-- ===================== HEADER ===================== -->
-    <header class="fixed top-0 left-64 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-end px-space-xl">
-      <div class="flex items-center gap-space-lg">
-        <button type="button" class="relative p-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all flex items-center justify-center">
-          <span class="material-symbols-outlined text-[22px]">notifications</span>
-          <span class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-secondary-fixed rounded-full ring-2 ring-surface-container-lowest"></span>
-        </button>
- 
-        <div class="h-6 w-px bg-surface-container"></div>
- 
-        <div class="relative" id="perfilWrapper">
-          <button id="perfilBtn" type="button" aria-haspopup="true" aria-expanded="false"
-            class="flex items-center gap-space-sm pl-space-sm pr-space-xs py-1 rounded-xl hover:bg-surface-container transition-all">
-            <div class="text-right">
-              <p class="font-title-md text-title-md text-on-surface leading-tight">Fernanda Silva</p>
-              <p class="font-label-sm text-label-sm text-on-surface-variant leading-tight">Gerente Executiva</p>
-            </div>
-            <img class="w-8 h-8 rounded-full object-cover shadow-[0_1px_8px_rgba(0,0,0,0.04)]" alt="Profile"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUbn12l0EFfGnh59Pq6grpnC6L7zyu0RK3udQhTQ7guK9JnrcZN0z4wF8mBrG4r9jEor0LCDRzGdiQjJiPbRio_p8a2AWxJ_yr3ZsgTJCqzlKLWqTWL2Fz1JxI04fHZSUyGlRQ6RRzBBjiqYoxxHMs-jAlz5jqLUYIeq1ywTC9LzJ6ksZHp0hORLqg7svkCW4NL-URNCYtqCLI3DHfoPjGLSRik7hNwqTGuBVMOkc_nAzE0rU7FIFK" />
-            <span id="perfilSeta" class="material-symbols-outlined text-[20px] text-outline transition-transform">expand_more</span>
-          </button>
- 
-          <div id="perfilMenu" role="menu"
-            class="absolute right-0 top-full mt-2 w-64 bg-surface-container-lowest rounded-xl shadow-[0_12px_32px_rgba(11,28,48,0.16)] ring-1 ring-black/5 p-space-sm z-50">
-            <div class="px-space-md py-space-sm mb-1 border-b border-surface-container">
-              <p class="font-title-md text-title-md text-on-surface">Fernanda Silva</p>
-              <p class="font-body-sm text-body-sm text-outline">fernanda.silva@moovere.com.br</p>
-            </div>
-            <button type="button" role="menuitem" data-acao="perfil" class="w-full flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface hover:bg-surface-container-low transition-colors text-left">
-              <span class="material-symbols-outlined text-[20px] text-outline">person</span>
-              <span class="font-body-md text-body-md">Meu perfil</span>
-            </button>
-            <button type="button" role="menuitem" data-acao="config" class="w-full flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface hover:bg-surface-container-low transition-colors text-left">
-              <span class="material-symbols-outlined text-[20px] text-outline">settings</span>
-              <span class="font-body-md text-body-md">Configurações</span>
-            </button>
-            <button type="button" role="menuitem" data-acao="ajuda" class="w-full flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface hover:bg-surface-container-low transition-colors text-left">
-              <span class="material-symbols-outlined text-[20px] text-outline">help</span>
-              <span class="font-body-md text-body-md">Central de ajuda</span>
-            </button>
-            <div class="h-px bg-surface-container my-1"></div>
-            <button type="button" role="menuitem" data-acao="sair" class="w-full flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-error hover:bg-error-container/50 transition-colors text-left">
-              <span class="material-symbols-outlined text-[20px]">logout</span>
-              <span class="font-body-md text-body-md">Sair</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </header>
- 
-    <!-- ===================== CONTEÚDO PRINCIPAL ===================== -->
-    <main class="w-full pt-16 bg-surface min-h-screen">
-      <div class="w-full px-space-xl py-space-lg max-w-[1680px] mx-auto">
-        <div class="flex flex-col w-full gap-space-lg">
- 
-          <!-- Cabeçalho da página + KPIs -->
-          <div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md">
-            <div>
-              <div class="flex items-center gap-space-xs mb-1">
-                <span class="w-2 h-2 rounded-full bg-secondary-fixed"></span>
-                <span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Gestão Regulatória</span>
-              </div>
-              <h1 class="font-headline-lg text-headline-lg text-on-surface">Documentos</h1>
-              <p class="font-body-md text-body-md text-on-surface-variant mt-0.5">
-                Acompanhe os documentos das unidades em tempo real com conformidade garantida.
-              </p>
-            </div>
- 
-            <div class="flex items-center gap-space-sm flex-wrap">
-              <div class="flex items-center gap-space-sm px-space-md py-2 bg-surface-container-lowest rounded-xl shadow-sm">
-                <span class="w-2.5 h-2.5 rounded-full bg-secondary"></span>
-                <div class="flex flex-col">
-                  <span class="font-label-sm text-label-sm text-outline">Conformes</span>
-                  <span class="font-title-md text-title-md text-on-surface font-bold">218</span>
-                </div>
-              </div>
-              <div class="flex items-center gap-space-sm px-space-md py-2 bg-surface-container-lowest rounded-xl shadow-sm">
-                <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
-                <div class="flex flex-col">
-                  <span class="font-label-sm text-label-sm text-outline">A Vencer</span>
-                  <span class="font-title-md text-title-md text-on-surface font-bold">19</span>
-                </div>
-              </div>
-              <div class="flex items-center gap-space-sm px-space-md py-2 bg-surface-container-lowest rounded-xl shadow-sm">
-                <span class="w-2.5 h-2.5 rounded-full bg-error"></span>
-                <div class="flex flex-col">
-                  <span class="font-label-sm text-label-sm text-outline">Vencidos</span>
-                  <span class="font-title-md text-title-md text-error font-bold">11</span>
-                </div>
-              </div>
-            </div>
-          </div>
- 
-          <!-- Filtros + ação principal -->
-          <div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col gap-space-md">
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-space-sm items-center">
- 
-              <div class="md:col-span-4 relative flex items-center">
-                <span class="material-symbols-outlined absolute left-3 text-[18px] text-outline pointer-events-none">search</span>
-                <input
-                  id="searchInput"
-                  type="text"
-                  placeholder="Buscar por nome do documento, código ou órgão..."
-                  class="w-full h-10 pl-9 pr-space-md bg-surface-container-low rounded-lg font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:bg-surface-container transition-all"
-                />
-              </div>
- 
-              <div class="md:col-span-2">
-                <div class="relative">
-                  <select id="filterUnidade" class="w-full h-10 px-space-sm pl-8 appearance-none bg-surface-container-low rounded-lg font-body-md text-body-md text-on-surface focus:outline-none focus:bg-surface-container cursor-pointer transition-all">
-                    <option value="">Todas as Unidades</option>
-                    <option value="Recife">Recife</option>
-                    <option value="Olinda">Olinda</option>
-                    <option value="Jaboatão">Jaboatão</option>
-                    <option value="Caruaru">Caruaru</option>
-                    <option value="Petrolina">Petrolina</option>
-                  </select>
-                  <span class="material-symbols-outlined absolute left-2.5 top-2.5 text-[18px] text-outline pointer-events-none">apartment</span>
-                  <span class="material-symbols-outlined absolute right-2.5 top-2.5 text-[18px] text-outline pointer-events-none">expand_more</span>
-                </div>
-              </div>
- 
-              <div class="md:col-span-2">
-                <div class="relative">
-                  <select id="filterStatus" class="w-full h-10 px-space-sm pl-8 appearance-none bg-surface-container-low rounded-lg font-body-md text-body-md text-on-surface focus:outline-none focus:bg-surface-container cursor-pointer transition-all">
-                    <option value="">Todos os Status</option>
-                    <option value="Válido">Válido</option>
-                    <option value="Próximo do vencimento">Próximo do vencimento</option>
-                    <option value="Vencido">Vencido</option>
-                  </select>
-                  <span class="material-symbols-outlined absolute left-2.5 top-2.5 text-[18px] text-outline pointer-events-none">flag</span>
-                  <span class="material-symbols-outlined absolute right-2.5 top-2.5 text-[18px] text-outline pointer-events-none">expand_more</span>
-                </div>
-              </div>
- 
-              <div class="md:col-span-2">
-                <div class="relative">
-                  <select id="filterCategoria" class="w-full h-10 px-space-sm pl-8 appearance-none bg-surface-container-low rounded-lg font-body-md text-body-md text-on-surface focus:outline-none focus:bg-surface-container cursor-pointer transition-all">
-                    <option value="">Todas Categorias</option>
-                    <option value="Alvarás">Alvarás</option>
-                    <option value="Licenças Ambientais">Licenças Ambientais</option>
-                    <option value="Seguros">Seguros</option>
-                    <option value="Contratos">Contratos</option>
-                    <option value="Laudos Técnicos">Laudos Técnicos</option>
-                  </select>
-                  <span class="material-symbols-outlined absolute left-2.5 top-2.5 text-[18px] text-outline pointer-events-none">category</span>
-                  <span class="material-symbols-outlined absolute right-2.5 top-2.5 text-[18px] text-outline pointer-events-none">expand_more</span>
-                </div>
-              </div>
- 
-              <div class="md:col-span-2 flex justify-end">
-                <button id="newDocumentBtn" type="button" class="w-full h-10 px-space-md bg-secondary-fixed hover:bg-secondary-fixed-dim text-on-secondary-fixed font-title-md text-title-md font-bold rounded-lg flex items-center justify-center gap-space-xs transition-all shadow-sm">
-                  <span class="material-symbols-outlined text-[20px]">add</span>
-                  <span>Novo Documento</span>
-                </button>
-              </div>
- 
-            </div>
-          </div>
- 
-          <!-- Tabela de documentos -->
-          <div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col">
-            <div class="overflow-x-auto">
-              <table class="w-full text-left border-collapse">
-                <thead>
-                  <tr class="bg-surface-container-low h-10 text-outline font-label-md text-label-md">
-                    <th class="px-space-md font-semibold">Documento</th>
-                    <th class="px-space-md font-semibold">Unidade</th>
-                    <th class="px-space-md font-semibold">Categoria</th>
-                    <th class="px-space-md font-semibold">Data de Cadastro</th>
-                    <th class="px-space-md font-semibold">Validade</th>
-                    <th class="px-space-md font-semibold">Status</th>
-                    <th class="px-space-md font-semibold text-right">Ações</th>
-                  </tr>
-                </thead>
-                <tbody id="documentsBody" class="divide-y-0 text-on-surface font-body-md text-body-md">
-                  <!-- Linhas geradas dinamicamente por renderTable() -->
-                </tbody>
-              </table>
-            </div>
- 
-            <div class="p-space-md bg-surface-container-low flex flex-col sm:flex-row items-center justify-between gap-space-md">
-              <div id="paginationInfo" class="font-body-sm text-body-sm text-outline">Mostrando 0 documentos</div>
-              <div id="paginationControls" class="flex items-center gap-1"></div>
-            </div>
-          </div>
- 
-          <!-- Cards informativos -->
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
-            <div class="p-space-md bg-surface-container-lowest rounded-xl shadow-sm flex items-start gap-space-md">
-              <div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-primary shrink-0">
-                <span class="material-symbols-outlined text-[22px]">notifications_active</span>
-              </div>
-              <div>
-                <h4 class="font-title-md text-title-md text-on-surface font-semibold">Alertas Automáticos</h4>
-                <p class="font-body-sm text-body-sm text-outline mt-0.5">
-                  Notificações disparadas para as lideranças locais a 60, 30 e 15 dias do vencimento.
-                </p>
-              </div>
-            </div>
-            <div class="p-space-md bg-surface-container-lowest rounded-xl shadow-sm flex items-start gap-space-md">
-              <div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-primary shrink-0">
-                <span class="material-symbols-outlined text-[22px]">cloud_sync</span>
-              </div>
-              <div>
-                <h4 class="font-title-md text-title-md text-on-surface font-semibold">Integração Municipal</h4>
-                <p class="font-body-sm text-body-sm text-outline mt-0.5">
-                  Sincronização diária com certidões negativas de débito e portais das capitais e interior.
-                </p>
-              </div>
-            </div>
-            <div class="p-space-md bg-surface-container-lowest rounded-xl shadow-sm flex items-start gap-space-md">
-              <div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-primary shrink-0">
-                <span class="material-symbols-outlined text-[22px]">folder_zip</span>
-              </div>
-              <div>
-                <h4 class="font-title-md text-title-md text-on-surface font-semibold">Dossiê para Auditoria</h4>
-                <p class="font-body-sm text-body-sm text-outline mt-0.5">
-                  Exporte o pacote de documentação de qualquer filial em um único arquivo ZIP certificado.
-                </p>
-              </div>
-            </div>
-          </div>
- 
-        </div>
-      </div>
-    </main>
-  </div>
- 
-  <!-- Container dos avisos (toast) -->
-  <div id="toastContainer" aria-live="polite"></div>
- 
-  <!-- ===================== MODAL: NOVO DOCUMENTO ===================== -->
-  <div id="documentModal" class="hidden fixed inset-0 z-[100] bg-black/40 items-center justify-center p-4">
-    <div class="bg-surface-container-lowest rounded-xl shadow-2xl w-full max-w-xl p-space-lg">
-      <div class="flex items-center justify-between mb-space-md">
+
+
+
+  <div class="main">
+    <div class="topbar">
+      <span>Área do cliente &nbsp;/&nbsp; Cadastrar produto</span>
+      <span class="topbar-status">Ambiente de demonstração</span>
+    </div>
+
+    <div class="page">
+      <div class="page-head">
         <div>
-          <h2 class="font-headline-md text-headline-md text-on-surface">Novo Documento</h2>
-          <p class="font-body-sm text-body-sm text-on-surface-variant">Cadastre um documento da Moovere.</p>
+          <h1>Cadastrar novo produto</h1>
+          <p>Preencha os dados da compra e revise o resumo demonstrativo.</p>
         </div>
-        <button id="closeModalBtn" type="button" class="p-2 rounded-lg hover:bg-surface-container">
-          <span class="material-symbols-outlined">close</span>
-        </button>
+        <span class="badge">Rascunho • não cadastrado</span>
       </div>
- 
-      <form id="documentForm" class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
-        <label class="md:col-span-2 flex flex-col gap-1">
-          <span class="font-label-md text-label-md">Nome do documento</span>
-          <input id="docNome" required placeholder="Ex.: Licença Ambiental" class="h-10 px-3 bg-surface-container-low rounded-lg" />
-        </label>
- 
-        <label class="flex flex-col gap-1">
-          <span class="font-label-md text-label-md">Código</span>
-          <input id="docCodigo" required placeholder="DOC-001" class="h-10 px-3 bg-surface-container-low rounded-lg" />
-        </label>
- 
-        <label class="flex flex-col gap-1">
-          <span class="font-label-md text-label-md">Órgão</span>
-          <input id="docOrgao" required placeholder="Órgão emissor" class="h-10 px-3 bg-surface-container-low rounded-lg" />
-        </label>
- 
-        <label class="flex flex-col gap-1">
-          <span class="font-label-md text-label-md">Unidade</span>
-          <select id="docUnidade" class="h-10 px-3 bg-surface-container-low rounded-lg">
-            <option>Recife</option>
-            <option>Olinda</option>
-            <option>Jaboatão</option>
-            <option>Caruaru</option>
-            <option>Petrolina</option>
-          </select>
-        </label>
- 
-        <label class="flex flex-col gap-1">
-          <span class="font-label-md text-label-md">Categoria</span>
-          <select id="docCategoria" class="h-10 px-3 bg-surface-container-low rounded-lg">
-            <option>Alvarás</option>
-            <option>Licenças Ambientais</option>
-            <option>Seguros</option>
-            <option>Contratos</option>
-            <option>Laudos Técnicos</option>
-          </select>
-        </label>
- 
-        <label class="flex flex-col gap-1">
-          <span class="font-label-md text-label-md">Data de cadastro</span>
-          <input id="docCadastro" type="date" required class="h-10 px-3 bg-surface-container-low rounded-lg" />
-        </label>
- 
-        <label class="flex flex-col gap-1">
-          <span class="font-label-md text-label-md">Validade</span>
-          <input id="docValidade" type="date" required class="h-10 px-3 bg-surface-container-low rounded-lg" />
-        </label>
- 
-        <div class="md:col-span-2 flex justify-end gap-2 mt-2">
-          <button id="cancelModalBtn" type="button" class="h-10 px-4 rounded-lg bg-surface-container">Cancelar</button>
-          <button type="submit" class="h-10 px-4 rounded-lg bg-secondary-fixed text-on-secondary-fixed font-bold">Cadastrar documento</button>
+
+      <div class="layout">
+
+        <form id="form" novalidate>
+
+          <section class="panel">
+            <div class="panel-head"><h2>Dados do produto</h2><span>* Obrigatórios</span></div>
+
+            <div class="field">
+              <label for="nome">Nome do produto *</label>
+              <input id="nome" placeholder="Ex.: Mouse Logitech MX Master 3S">
+              <span class="error-msg">Informe o nome do produto.</span>
+            </div>
+
+            <div class="row">
+              <div class="field">
+                <label for="cat">Categoria *</label>
+                <select id="cat">
+                  <option value="">Selecione</option>
+                  <option>Eletrônicos</option>
+                  <option>Casa e decoração</option>
+                  <option>Moda e acessórios</option>
+                  <option>Livros e papelaria</option>
+                  <option>Esporte e lazer</option>
+                  <option>Outros</option>
+                </select>
+                <span class="error-msg">Escolha uma categoria.</span>
+              </div>
+              <div class="field">
+                <label for="valor">Valor da compra *</label>
+                <input id="valor" inputmode="numeric" placeholder="R$ 0,00">
+                <span class="error-msg">Informe um valor maior que zero.</span>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="field">
+                <label for="loja">Loja / vendedor *</label>
+                <input id="loja" placeholder="Ex.: Loja Exemplo">
+                <span class="error-msg">Informe a loja ou o vendedor.</span>
+              </div>
+              <div class="field">
+                <label for="data">Data da compra *</label>
+                <input id="data" type="date">
+                <span class="error-msg">Informe uma data que não seja futura.</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-head"><h2>Informações de envio</h2></div>
+
+            <div class="row">
+              <div class="field">
+                <label for="transp">Transportadora *</label>
+                <select id="transp">
+                  <option value="">Selecione</option>
+                  <option>Correios (demo)</option>
+                  <option>Jadlog (demo)</option>
+                  <option>Loggi (demo)</option>
+                  <option>Outra (demo)</option>
+                </select>
+                <span class="error-msg">Escolha a transportadora.</span>
+              </div>
+              <div class="field">
+                <label for="rastreio">Código de rastreio (opcional)</label>
+                <input id="rastreio" placeholder="Ainda não informado" autocapitalize="characters">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="field">
+                <label for="cep">CEP de destino *</label>
+                <input id="cep" inputmode="numeric" placeholder="00000-000" maxlength="9">
+                <span class="error-msg">Digite um CEP com 8 números.</span>
+              </div>
+              <div class="field">
+                <label for="cidade">Cidade / UF *</label>
+                <input id="cidade" placeholder="São Paulo / SP">
+                <span class="error-msg">Informe a cidade e o estado.</span>
+              </div>
+            </div>
+
+            <label>Comprovante da compra (opcional)</label>
+            <div class="file-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/>
+              </svg>
+              <div class="file-info">
+                <b id="fileName">Nenhum arquivo anexado</b>
+                <small id="fileSize">PDF, JPG ou PNG • o arquivo não sai do seu navegador</small>
+              </div>
+              <button type="button" class="link-btn" id="filePick">Anexar</button>
+              <input type="file" id="file" accept=".pdf,image/*" hidden>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="consent">
+              <input type="checkbox" id="consent">
+              <label for="consent">Estou ciente de que este cadastro é demonstrativo e não gera contratação, cobrança ou cobertura de seguro real.</label>
+            </div>
+            <div class="field invalid" id="consentError">
+              <span class="error-msg">Marque a ciência para cadastrar o produto.</span>
+            </div>
+
+            <div class="actions">
+              <button type="button" class="btn" id="cancel">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Cadastrar produto (demo)</button>
+            </div>
+          </section>
+        </form>
+
+
+        <div>
+          <section class="panel">
+            <div class="panel-head"><h2>Resumo do cadastro</h2></div>
+            <span class="summary-tag">Seguro de encomenda • demo</span>
+
+            <div class="summary-item">
+              <div class="summary-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/>
+                </svg>
+              </div>
+              <div><b id="sumName">Produto sem nome</b><small id="sumCategory">Categoria não escolhida</small></div>
+            </div>
+
+            <div class="summary-line"><span>Valor do produto</span><span id="sumValue">R$ 0,00</span></div>
+            <div class="summary-line"><span>Taxa ilustrativa</span><span>2% por envio</span></div>
+            <div class="summary-line"><span>Destino</span><span id="sumDest">—</span></div>
+
+            <div class="summary-total">
+              <small>Total</small>
+              <strong id="sumTotal">R$ 0,00</strong>
+              <small>Custo simulado deste envio</small>
+            </div>
+          </section>
+
+          <section class="notice">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+              <circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>
+            </svg>
+            <b>Revise com tranquilidade.</b>
+            <p>Este produto ainda não faz parte dos seus 3 serviços ativos. O resumo é apenas uma prévia e não altera os valores do painel.</p>
+          </section>
+
+          <section class="panel" style="margin-top: 20px;">
+            <div class="panel-head"><h2>Produtos cadastrados</h2><span id="listCount">0</span></div>
+            <p class="empty-text" id="listEmpty">Nenhum produto cadastrado ainda. Preencha o formulário para começar.</p>
+            <ul class="product-list" id="productList"></ul>
+          </section>
+
+          <p class="demo-note">Protótipo estático • Dados e valores fictícios. Nenhuma contratação ou cobertura de seguro real.</p>
         </div>
-      </form>
+
+      </div>
     </div>
   </div>
- 
-  <!-- ===================== LÓGICA DA PÁGINA ===================== -->
+
+  <div id="toasts" aria-live="polite"></div>
+
   <script>
-    /* ---------- Dados ---------- */
-    // Em produção isso viria de uma API; aqui é uma lista em memória.
-    const documentos = [
-      { id: 1,  nome: 'Alvará Sanitário e Municipal',                              codigo: 'ALV-REC-2024',    orgao: 'Prefeitura do Recife',   unidade: 'Recife',    categoria: 'Alvarás',              cadastro: '10/01/2024', validade: '15/12/2026' },
-      { id: 2,  nome: 'AVCB - Auto de Vistoria do Corpo de Bombeiros',              codigo: 'AVCB-OLI-2024',   orgao: 'Corpo de Bombeiros PE',   unidade: 'Olinda',    categoria: 'Laudos Técnicos',      cadastro: '12/02/2024', validade: '25/10/2026' },
-      { id: 3,  nome: 'Licença Ambiental de Operação',                             codigo: 'LAO-PET-2025',    orgao: 'CPRH',                    unidade: 'Petrolina', categoria: 'Licenças Ambientais',  cadastro: '01/05/2025', validade: '01/10/2026' },
-      { id: 4,  nome: 'Apólice de Seguro Patrimonial e Responsabilidade Civil',     codigo: 'PORTO-SEG-9091',  orgao: 'Porto Seguro Cia',        unidade: 'Jaboatão',  categoria: 'Seguros',              cadastro: '15/02/2026', validade: '15/02/2027' },
-      { id: 5,  nome: 'Contrato de Manutenção de Climatização',                    codigo: 'CTR-2024-041',    orgao: 'TermoTech Engenharia',    unidade: 'Caruaru',   categoria: 'Contratos',            cadastro: '01/08/2026', validade: '30/08/2027' },
-      { id: 6,  nome: 'Habite-se e Certidão de Regularidade Predial',              codigo: 'HAB-REC-2022',    orgao: 'Prefeitura do Recife',    unidade: 'Recife',    categoria: 'Alvarás',              cadastro: '20/09/2022', validade: '20/09/2027' },
-      { id: 7,  nome: 'Licença de Operação de Transporte',                         codigo: 'LOT-JAB-2026',    orgao: 'Órgão Estadual',          unidade: 'Jaboatão',  categoria: 'Licenças Ambientais',  cadastro: '05/03/2026', validade: '05/03/2027' },
-      { id: 8,  nome: 'Contrato de Locação do Galpão',                             codigo: 'CTR-OLI-118',     orgao: 'Moovere',                 unidade: 'Olinda',    categoria: 'Contratos',            cadastro: '18/01/2026', validade: '18/01/2028' },
-      { id: 9,  nome: 'Laudo de Segurança Elétrica',                               codigo: 'LSE-CAR-026',     orgao: 'SegTech',                 unidade: 'Caruaru',   categoria: 'Laudos Técnicos',      cadastro: '11/04/2026', validade: '11/04/2027' },
-      { id: 10, nome: 'Seguro de Frota',                                           codigo: 'SEG-FRO-777',     orgao: 'Seguradora Nacional',     unidade: 'Petrolina', categoria: 'Seguros',              cadastro: '22/01/2026', validade: '22/01/2027' },
-      { id: 11, nome: 'Licença Ambiental do Galpão',                               codigo: 'LAG-REC-010',     orgao: 'CPRH',                    unidade: 'Recife',    categoria: 'Licenças Ambientais',  cadastro: '03/02/2026', validade: '03/02/2027' },
-      { id: 12, nome: 'Alvará de Funcionamento',                                   codigo: 'ALV-CAR-091',     orgao: 'Prefeitura de Caruaru',   unidade: 'Caruaru',   categoria: 'Alvarás',              cadastro: '09/01/2025', validade: '09/09/2026' },
-    ];
- 
-    /* ---------- Estado ---------- */
-    const ITENS_POR_PAGINA = 6;
-    let paginaAtual = 1;
- 
-    /* ---------- Referências de elementos ---------- */
-    const tabelaBody       = document.getElementById('documentsBody');
-    const inputBusca       = document.getElementById('searchInput');
-    const selectUnidade    = document.getElementById('filterUnidade');
-    const selectStatus     = document.getElementById('filterStatus');
-    const selectCategoria  = document.getElementById('filterCategoria');
-    const paginationInfo   = document.getElementById('paginationInfo');
-    const paginationCtrls  = document.getElementById('paginationControls');
-    const modal            = document.getElementById('documentModal');
-    const formNovoDoc      = document.getElementById('documentForm');
- 
-    /* ---------- Utilidades de data / status ---------- */
- 
-    // Converte "dd/mm/aaaa" em um objeto Date.
-    function parseDataBR(data) {
-      const [dia, mes, ano] = data.split('/').map(Number);
-      return new Date(ano, mes - 1, dia);
-    }
- 
-    // Calcula o status de um documento a partir da validade.
-    function getStatusDocumento(doc) {
-      const hoje = new Date();
-      hoje.setHours(0, 0, 0, 0);
- 
-      const validade = parseDataBR(doc.validade);
-      const diasRestantes = Math.ceil((validade - hoje) / 86_400_000);
- 
-      if (diasRestantes < 0) {
-        return { texto: 'Vencido', classe: 'bg-error-container text-on-error-container', dias: diasRestantes };
-      }
-      if (diasRestantes <= 60) {
-        return { texto: 'Próximo do vencimento', classe: 'bg-secondary-fixed/30 text-on-secondary-fixed-variant', dias: diasRestantes };
-      }
-      return { texto: 'Válido', classe: 'bg-secondary-fixed/30 text-on-secondary-fixed-variant', dias: diasRestantes };
-    }
- 
-    /* ---------- Filtros ---------- */
- 
-    function aplicarFiltros() {
-      const termo = inputBusca.value.toLowerCase().trim();
- 
-      return documentos.filter((doc) => {
-        const status = getStatusDocumento(doc).texto;
-        const textoBusca = [doc.nome, doc.codigo, doc.orgao, doc.unidade, doc.categoria]
-          .join(' ')
-          .toLowerCase();
- 
-        const passaBusca     = !termo || textoBusca.includes(termo);
-        const passaUnidade   = !selectUnidade.value || doc.unidade === selectUnidade.value;
-        const passaStatus    = !selectStatus.value || status === selectStatus.value;
-        const passaCategoria = !selectCategoria.value || doc.categoria === selectCategoria.value;
- 
-        return passaBusca && passaUnidade && passaStatus && passaCategoria;
-      });
-    }
- 
-    /* ---------- Renderização da tabela ---------- */
- 
-    function criarLinhaTabela(doc) {
-      const status = getStatusDocumento(doc);
-      const diasTexto = status.dias < 0
-        ? `Vencido há ${Math.abs(status.dias)} dias`
-        : `${status.dias} dias restantes`;
- 
-      return `
-        <tr class="h-[64px] hover:bg-surface-container-low/60 transition-colors">
-          <td class="px-space-md">
-            <div class="flex items-center gap-space-sm">
-              <div class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center text-primary shrink-0">
-                <span class="material-symbols-outlined text-[20px]">description</span>
-              </div>
-              <div class="min-w-0">
-                <p class="font-title-md text-title-md text-on-surface font-semibold truncate">${doc.nome}</p>
-                <p class="font-body-sm text-body-sm text-outline">${doc.codigo} • ${doc.orgao}</p>
-              </div>
-            </div>
-          </td>
-          <td class="px-space-md whitespace-nowrap">
-            <span class="inline-flex items-center gap-1 font-body-md text-on-surface">
-              <span class="material-symbols-outlined text-[16px] text-outline">location_on</span>${doc.unidade}
-            </span>
-          </td>
-          <td class="px-space-md whitespace-nowrap">
-            <span class="px-2.5 py-1 rounded-full bg-surface-container-high text-on-surface text-label-sm font-label-sm">${doc.categoria}</span>
-          </td>
-          <td class="px-space-md whitespace-nowrap text-on-surface-variant font-body-sm text-body-sm">${doc.cadastro}</td>
-          <td class="px-space-md whitespace-nowrap">
-            <div class="flex flex-col">
-              <span class="font-title-md text-title-md text-on-surface">${doc.validade}</span>
-              <span class="font-body-sm text-body-sm text-outline">${diasTexto}</span>
-            </div>
-          </td>
-          <td class="px-space-md whitespace-nowrap">
-            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full ${status.classe} text-label-sm font-label-sm font-bold">
-              <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>${status.texto}
-            </span>
-          </td>
-          <td class="px-space-md whitespace-nowrap text-right">
-            <div class="flex items-center justify-end gap-1 text-on-surface-variant">
-              <button type="button" title="Baixar Arquivo" onclick="baixarDocumento(${doc.id})" class="p-1.5 hover:text-primary hover:bg-surface-container rounded-md transition-colors">
-                <span class="material-symbols-outlined text-[18px]">download</span>
-              </button>
-              <button type="button" title="Visualizar" onclick="visualizarDocumento(${doc.id})" class="p-1.5 hover:text-primary hover:bg-surface-container rounded-md transition-colors">
-                <span class="material-symbols-outlined text-[18px]">visibility</span>
-              </button>
-              <button type="button" title="Mais opções" onclick="maisOpcoes(${doc.id})" class="p-1.5 hover:text-primary hover:bg-surface-container rounded-md transition-colors">
-                <span class="material-symbols-outlined text-[18px]">more_vert</span>
-              </button>
-            </div>
-          </td>
-        </tr>
-      `;
-    }
- 
-    function renderizarPaginacao(totalPaginas) {
-      paginationCtrls.innerHTML = '';
- 
-      const botaoAnterior = document.createElement('button');
-      botaoAnterior.className = 'w-8 h-8 rounded-lg flex items-center justify-center hover:bg-surface-container';
-      botaoAnterior.innerHTML = '<span class="material-symbols-outlined text-[18px]">chevron_left</span>';
-      botaoAnterior.disabled = paginaAtual === 1;
-      botaoAnterior.onclick = () => { paginaAtual--; renderizarTabela(); };
-      paginationCtrls.appendChild(botaoAnterior);
- 
-      for (let pagina = 1; pagina <= totalPaginas; pagina++) {
-        const botaoPagina = document.createElement('button');
-        botaoPagina.textContent = pagina;
-        botaoPagina.className = 'w-8 h-8 rounded-lg flex items-center justify-center font-label-md ' +
-          (pagina === paginaAtual
-            ? 'bg-primary text-on-primary font-bold'
-            : 'text-on-surface hover:bg-surface-container');
-        botaoPagina.onclick = () => { paginaAtual = pagina; renderizarTabela(); };
-        paginationCtrls.appendChild(botaoPagina);
-      }
- 
-      const botaoProximo = document.createElement('button');
-      botaoProximo.className = 'w-8 h-8 rounded-lg flex items-center justify-center hover:bg-surface-container';
-      botaoProximo.innerHTML = '<span class="material-symbols-outlined text-[18px]">chevron_right</span>';
-      botaoProximo.disabled = paginaAtual === totalPaginas;
-      botaoProximo.onclick = () => { paginaAtual++; renderizarTabela(); };
-      paginationCtrls.appendChild(botaoProximo);
-    }
- 
-    function renderizarTabela() {
-      const listaFiltrada = aplicarFiltros();
-      const totalPaginas = Math.max(1, Math.ceil(listaFiltrada.length / ITENS_POR_PAGINA));
- 
-      if (paginaAtual > totalPaginas) paginaAtual = totalPaginas;
- 
-      const indiceInicial = (paginaAtual - 1) * ITENS_POR_PAGINA;
-      const itensDaPagina = listaFiltrada.slice(indiceInicial, indiceInicial + ITENS_POR_PAGINA);
- 
-      tabelaBody.innerHTML = itensDaPagina.map(criarLinhaTabela).join('');
- 
-      paginationInfo.textContent = listaFiltrada.length
-        ? `Mostrando ${indiceInicial + 1} a ${Math.min(indiceInicial + ITENS_POR_PAGINA, listaFiltrada.length)} de ${listaFiltrada.length} documentos`
-        : 'Nenhum documento encontrado';
- 
-      renderizarPaginacao(totalPaginas);
-    }
- 
-    function atualizarListaComFiltros() {
-      paginaAtual = 1;
-      renderizarTabela();
-    }
- 
-    /* ---------- Ações por documento ---------- */
- 
-    function visualizarDocumento(id) {
-      const doc = documentos.find((d) => d.id === id);
-      const status = getStatusDocumento(doc);
- 
-      alert(
-        `DOCUMENTO\n\n` +
-        `${doc.nome}\n` +
-        `Código: ${doc.codigo}\n` +
-        `Órgão: ${doc.orgao}\n` +
-        `Unidade: ${doc.unidade}\n` +
-        `Categoria: ${doc.categoria}\n` +
-        `Cadastro: ${doc.cadastro}\n` +
-        `Validade: ${doc.validade}\n` +
-        `Status: ${status.texto}`
-      );
-    }
- 
-    function baixarDocumento(id) {
-      const doc = documentos.find((d) => d.id === id);
-      const conteudo =
-        `Moovere - Documento\n` +
-        `Nome: ${doc.nome}\n` +
-        `Código: ${doc.codigo}\n` +
-        `Órgão: ${doc.orgao}\n` +
-        `Unidade: ${doc.unidade}\n` +
-        `Categoria: ${doc.categoria}\n` +
-        `Cadastro: ${doc.cadastro}\n` +
-        `Validade: ${doc.validade}\n` +
-        `Status: ${getStatusDocumento(doc).texto}`;
- 
-      const blob = new Blob([conteudo], { type: 'text/plain' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = `${doc.codigo}.txt`;
-      link.click();
-      URL.revokeObjectURL(link.href);
-    }
- 
-    function maisOpcoes(id) {
-      const doc = documentos.find((d) => d.id === id);
-      const confirmarExclusao = confirm(`Documento: ${doc.nome}\n\nDeseja excluir este documento?`);
- 
-      if (confirmarExclusao) {
-        const indice = documentos.findIndex((d) => d.id === id);
-        documentos.splice(indice, 1);
-        renderizarTabela();
-      }
-    }
- 
-    /* ---------- Modal "Novo Documento" ---------- */
- 
-    function abrirModal() {
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-      document.getElementById('docCadastro').value = new Date().toISOString().slice(0, 10);
-    }
- 
-    function fecharModal() {
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
-    }
- 
-    function converterDataParaBR(dataISO) {
-      // "aaaa-mm-dd" -> "dd/mm/aaaa"
-      return dataISO.split('-').reverse().join('/');
-    }
- 
-    function cadastrarNovoDocumento(evento) {
-      evento.preventDefault();
- 
-      documentos.unshift({
-        id: Date.now(),
-        nome: document.getElementById('docNome').value,
-        codigo: document.getElementById('docCodigo').value,
-        orgao: document.getElementById('docOrgao').value,
-        unidade: document.getElementById('docUnidade').value,
-        categoria: document.getElementById('docCategoria').value,
-        cadastro: converterDataParaBR(document.getElementById('docCadastro').value),
-        validade: converterDataParaBR(document.getElementById('docValidade').value),
-      });
- 
-      formNovoDoc.reset();
-      fecharModal();
-      atualizarListaComFiltros();
-      mostrarToast({ titulo: 'Documento cadastrado!', texto: 'O documento foi salvo e já aparece na lista.' });
-    }
- 
-    /* ---------- Avisos (toast) ---------- */
- 
-    // tipo: 'sucesso' | 'erro' | 'info'
-    function mostrarToast({ titulo, texto = '', tipo = 'sucesso', duracao = 4000 }) {
-      const icones = { sucesso: 'check_circle', erro: 'error', info: 'info' };
+
+    const $ = (id) => document.getElementById(id);
+
+    const formatBRL = (n) => n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+    const escapeHTML = (s) =>
+      String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+    const TAXA = 0.02;          // taxa ilustrativa por envio
+    const FILE_HINT = 'PDF, JPG ou PNG • o arquivo não sai do seu navegador';
+
+    let valueInCents = 0;       // valor digitado, em centavos
+    const products = [];        // produtos cadastrados (somente em memória)
+
+    $('data').max = new Date().toISOString().slice(0, 10);
+
+
+  
+    const TOAST_ICONS = {
+      success: '<circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/>',
+      info:    '<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>',
+      error:   '<path d="M12 8v5M12 16h.01"/><circle cx="12" cy="12" r="9"/>',
+    };
+
+    function showToast(title, text = '', type = 'success') {
       const toast = document.createElement('div');
-      toast.className = 'toast ' + (tipo === 'sucesso' ? '' : tipo);
-      toast.style.setProperty('--toast-duracao', duracao + 'ms');
+      toast.className = 'toast' + (type === 'error' ? ' error' : '');
       toast.setAttribute('role', 'status');
       toast.innerHTML = `
-        <div class="toast-icone"><span class="material-symbols-outlined">${icones[tipo] || icones.info}</span></div>
-        <div class="toast-corpo">
-          <div class="toast-titulo">${titulo}</div>
-          ${texto ? `<div class="toast-texto">${texto}</div>` : ''}
+        <div class="toast-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${TOAST_ICONS[type]}</svg>
         </div>
-        <button type="button" class="toast-fechar" aria-label="Fechar"><span class="material-symbols-outlined">close</span></button>
-        <div class="toast-barra"></div>
-      `;
- 
-      const remover = () => {
-        if (toast.classList.contains('saindo')) return;
-        toast.classList.add('saindo');
-        toast.addEventListener('animationend', () => toast.remove());
-      };
-      toast.querySelector('.toast-fechar').addEventListener('click', remover);
-      toast.querySelector('.toast-barra').addEventListener('animationend', remover);
- 
-      document.getElementById('toastContainer').appendChild(toast);
+        <div>
+          <b>${escapeHTML(title)}</b>
+          ${text ? `<span class="toast-text">${escapeHTML(text)}</span>` : ''}
+        </div>
+        <button type="button" class="toast-close" aria-label="Fechar">×</button>
+        <div class="toast-bar"></div>`;
+
+      const remove = () => toast.remove();
+      toast.querySelector('.toast-close').addEventListener('click', remove);
+      toast.querySelector('.toast-bar').addEventListener('animationend', remove);
+      $('toasts').appendChild(toast);
     }
+
+
  
-    /* ---------- Menu do perfil (exemplo) ---------- */
- 
-    const perfilBtn  = document.getElementById('perfilBtn');
-    const perfilMenu = document.getElementById('perfilMenu');
- 
-    function alternarMenuPerfil(abrir) {
-      const vaiAbrir = abrir ?? !perfilMenu.classList.contains('aberto');
-      perfilMenu.classList.toggle('aberto', vaiAbrir);
-      perfilBtn.setAttribute('aria-expanded', vaiAbrir);
+    function renderSummary() {
+      const value = valueInCents / 100;
+      $('sumName').textContent     = $('nome').value.trim() || 'Produto sem nome';
+      $('sumCategory').textContent = $('cat').value || 'Categoria não escolhida';
+      $('sumValue').textContent    = formatBRL(value);
+      $('sumTotal').textContent    = formatBRL(value * (1 + TAXA));
+      $('sumDest').textContent     = $('cidade').value.trim().replace(/\s*\/\s*/, ', ') || '—';
     }
- 
-    const acoesPerfil = {
-      perfil: () => mostrarToast({ titulo: 'Meu perfil', texto: 'Aqui abriria a tela com seus dados (exemplo).', tipo: 'info' }),
-      config: () => mostrarToast({ titulo: 'Configurações', texto: 'Aqui abririam suas preferências (exemplo).', tipo: 'info' }),
-      ajuda:  () => mostrarToast({ titulo: 'Central de ajuda', texto: 'Aqui abriria o suporte (exemplo).', tipo: 'info' }),
-      sair:   () => mostrarToast({ titulo: 'Até logo, Fernanda!', texto: 'Sessão encerrada (exemplo).' }),
-    };
- 
-    perfilBtn.addEventListener('click', (e) => { e.stopPropagation(); alternarMenuPerfil(); });
-    perfilMenu.addEventListener('click', (e) => {
-      const item = e.target.closest('[data-acao]');
-      if (!item) return;
-      alternarMenuPerfil(false);
-      acoesPerfil[item.dataset.acao]?.();
+
+    ['nome', 'cat', 'cidade'].forEach((id) => $(id).addEventListener('input', renderSummary));
+
+
+  
+    $('valor').addEventListener('input', (e) => {
+      valueInCents = parseInt(e.target.value.replace(/\D/g, '') || '0', 10);
+      e.target.value = valueInCents ? formatBRL(valueInCents / 100) : '';
+      renderSummary();
     });
-    document.addEventListener('click', (e) => { if (!perfilMenu.contains(e.target)) alternarMenuPerfil(false); });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') alternarMenuPerfil(false); });
+
+    $('cep').addEventListener('input', (e) => {
+      const digits = e.target.value.replace(/\D/g, '').slice(0, 8);
+      e.target.value = digits.length > 5 ? `${digits.slice(0, 5)}-${digits.slice(5)}` : digits;
+    });
+
+    $('filePick').addEventListener('click', () => $('file').click());
+
+    $('file').addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      $('fileName').textContent = file ? file.name : 'Nenhum arquivo anexado';
+      $('fileSize').textContent = file ? `${Math.max(1, Math.round(file.size / 1024))} KB • arquivo anexado` : FILE_HINT;
+      $('filePick').textContent = file ? 'Trocar' : 'Anexar';
+    });
+
+
  
-    /* ---------- Event listeners ---------- */
- 
-    inputBusca.addEventListener('input', atualizarListaComFiltros);
-    selectUnidade.addEventListener('change', atualizarListaComFiltros);
-    selectStatus.addEventListener('change', atualizarListaComFiltros);
-    selectCategoria.addEventListener('change', atualizarListaComFiltros);
- 
-    document.getElementById('newDocumentBtn').addEventListener('click', abrirModal);
-    document.getElementById('closeModalBtn').addEventListener('click', fecharModal);
-    document.getElementById('cancelModalBtn').addEventListener('click', fecharModal);
-    modal.addEventListener('click', (evento) => { if (evento.target === modal) fecharModal(); });
-    formNovoDoc.addEventListener('submit', cadastrarNovoDocumento);
- 
-    /* ---------- Inicialização ---------- */
-    renderizarTabela();
+    const rules = {
+      nome:   (v) => v.trim().length > 1,
+      cat:    (v) => !!v,
+      valor:  ()  => valueInCents > 0,
+      loja:   (v) => v.trim().length > 1,
+      data:   (v) => !!v && v <= $('data').max,
+      transp: (v) => !!v,
+      cep:    (v) => v.replace(/\D/g, '').length === 8,
+      cidade: (v) => v.trim().length > 1,
+    };
+
+    function validateField(id) {
+      const valid = rules[id]($(id).value);
+      $(id).closest('.field').classList.toggle('invalid', !valid);
+      return valid;
+    }
+
+    Object.keys(rules).forEach((id) => $(id).addEventListener('blur', () => validateField(id)));
+
+
+    function renderProducts() {
+      $('listCount').textContent = products.length;
+      $('listEmpty').style.display = products.length ? 'none' : 'block';
+
+      $('productList').innerHTML = products.map((p) => `
+        <li>
+          <div><b>${escapeHTML(p.name)}</b><small>${escapeHTML(p.category)} • ${escapeHTML(p.destination)}</small></div>
+          <div style="text-align: right;">
+            ${formatBRL(p.value)}<br>
+            <button type="button" class="remove" data-id="${p.id}">Remover</button>
+          </div>
+        </li>`).join('');
+    }
+
+    $('productList').addEventListener('click', (e) => {
+      const button = e.target.closest('.remove');
+      if (!button) return;
+
+      const index = products.findIndex((p) => String(p.id) === button.dataset.id);
+      if (index === -1) return;
+
+      const [removed] = products.splice(index, 1);
+      renderProducts();
+      showToast('Produto removido', `${removed.name} saiu da lista.`, 'info');
+    });
+
+
+  
+    function resetForm() {
+      $('form').reset();
+      valueInCents = 0;
+      $('fileName').textContent = 'Nenhum arquivo anexado';
+      $('fileSize').textContent = FILE_HINT;
+      $('filePick').textContent = 'Anexar';
+      document.querySelectorAll('.field.invalid').forEach((f) => f.classList.remove('invalid'));
+      $('consentError').style.display = 'none';
+      renderSummary();
+    }
+
+    $('form').addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const fieldsOk  = Object.keys(rules).map(validateField).every(Boolean);
+      const consentOk = $('consent').checked;
+      $('consentError').style.display = consentOk ? 'none' : 'block';
+
+      if (!fieldsOk || !consentOk) {
+        document.querySelector('.field.invalid input, .field.invalid select')?.focus();
+        showToast('Revise os campos', 'Alguns campos obrigatórios precisam de atenção.', 'error');
+        return;
+      }
+
+      const name = $('nome').value.trim();
+      products.unshift({
+        id: Date.now(),
+        name,
+        category: $('cat').value,
+        value: valueInCents / 100,
+        destination: $('cidade').value.trim(),
+      });
+
+      renderProducts();
+      resetForm();
+      showToast('Produto cadastrado!', `${name} foi adicionado à lista da demonstração.`);
+    });
+
+    $('cancel').addEventListener('click', () => {
+      resetForm();
+      showToast('Rascunho descartado', 'Os campos foram limpos.', 'info');
+    });
+
+
+   
+    function toggleProfileMenu(open) {
+      $('profileMenu').classList.toggle('open', open);
+      $('profileBtn').setAttribute('aria-expanded', open);
+    }
+
+    $('profileBtn').addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleProfileMenu(!$('profileMenu').classList.contains('open'));
+    });
+
+    $('profileMenu').addEventListener('click', (e) => {
+      const item = e.target.closest('[data-label]');
+      if (!item) return;
+      toggleProfileMenu(false);
+      showToast(item.dataset.label, 'Esta ação é apenas ilustrativa na demonstração.', 'info');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!$('profile').contains(e.target)) toggleProfileMenu(false);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') toggleProfileMenu(false);
+    });
+
+    document.querySelectorAll('.menu a:not([aria-current])').forEach((link) => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        showToast(link.textContent.trim(), 'Esta tela não faz parte do protótipo de cadastro.', 'info');
+      });
+    });
+
+
+    renderSummary();
+    renderProducts();
   </script>
 </body>
 </html>
